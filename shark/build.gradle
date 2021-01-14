@@ -10,4 +10,5 @@ dependencies {
 
 run {
 	standardInput = System.in
+	args = [ 'mode=production' ]
 }
