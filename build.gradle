@@ -1,0 +1,22 @@
+allprojects {
+
+	repositories {
+		mavenCentral()
+	}
+
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
+
+	sourceCompatibility = JavaVersion.VERSION_11
+
+	version = '1.0.0'
+
+	if (project.hasProperty("eclipse.jdt.javaRuntimeName")) {
+		eclipse {
+			jdt {
+				javaRuntimeName = rootProject.getProperty("eclipse.jdt.javaRuntimeName")	// here "project" references *Eclipse* project, so use "rootProject" instead
+			}
+		}
+	}
+
+}

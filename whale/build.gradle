@@ -1,0 +1,13 @@
+apply plugin: 'application'
+
+mainClassName = 'com.steatoda.muddywaters.whale.WhaleCmd'
+
+dependencies {
+
+//	implementation	project(':common')
+
+}
+
+run {
+	standardInput = System.in
+}
