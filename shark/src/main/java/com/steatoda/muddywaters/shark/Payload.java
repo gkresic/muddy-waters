@@ -1,13 +1,15 @@
 package com.steatoda.muddywaters.shark;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.dslplatform.json.CompiledJson;
+import com.dslplatform.json.JsonAttribute;
 
+@CompiledJson
 public class Payload {
 
-	@JsonProperty
+	@JsonAttribute
 	public String text;
 
-	@JsonProperty
+	@JsonAttribute
 	public Integer number;
 
 }

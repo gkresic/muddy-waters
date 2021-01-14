@@ -1,5 +1,7 @@
 package com.steatoda.muddywaters.shark;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.Iterator;
 
 import org.rapidoid.http.MediaType;
@@ -7,8 +9,7 @@ import org.rapidoid.http.Req;
 import org.rapidoid.http.ReqRespHandler;
 import org.rapidoid.http.Resp;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.dslplatform.json.DslJson;
 
 public class Handler implements ReqRespHandler {
 
@@ -17,7 +18,7 @@ public class Handler implements ReqRespHandler {
 
 		Payload max = new Payload();
 
-		Iterator<Payload> iter = Mapper.readerFor(PayloadRef).readValues(req.body());
+		Iterator<Payload> iter = Json.iterateOver(Payload.class, new ByteArrayInputStream(req.body()));
 
 		while (iter.hasNext()) {
 			Payload payload = iter.next();
@@ -27,16 +28,19 @@ public class Handler implements ReqRespHandler {
 				max.text = payload.text;
 		}
 		
+		ByteArrayOutputStream ostream = new ByteArrayOutputStream(300);
+		Json.serialize(max, ostream);
+		
 		return resp
 			.code(200)
 			.contentType(MediaType.JSON)
-			.body(Mapper.writeValueAsBytes(max));
+			.body(ostream.toByteArray())
+		;
 		
 	}
 
 	private static final long serialVersionUID = 1L;
 
-	private static final ObjectMapper Mapper = new ObjectMapper();
-	private static final TypeReference<Payload> PayloadRef = new TypeReference<Payload>() {};
+	private static final DslJson<Payload> Json = new DslJson<>();
 	
 }
