@@ -2,6 +2,7 @@ package com.steatoda.muddywaters.shark;
 
 import java.util.Iterator;
 
+import org.rapidoid.http.MediaType;
 import org.rapidoid.http.Req;
 import org.rapidoid.http.ReqRespHandler;
 import org.rapidoid.http.Resp;
@@ -28,6 +29,7 @@ public class Handler implements ReqRespHandler {
 		
 		return resp
 			.code(200)
+			.contentType(MediaType.JSON)
 			.body(Mapper.writeValueAsBytes(max));
 		
 	}
