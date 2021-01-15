@@ -16,3 +16,8 @@ run {
 	standardInput = System.in
 	args = [ 'mode=production' ]
 }
+
+build.dependsOn installDist
+
+distTar.enabled = false
+distZip.enabled = false
