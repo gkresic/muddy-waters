@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	version="3.1"
+>
+
+	<display-name>Whale</display-name>
+
+	<context-param>
+		<param-name>resteasy.servlet.mapping.prefix</param-name>
+		<param-value>/api</param-value>
+	</context-param>
+	<context-param>
+		<param-name>resteasy.logger.type</param-name>
+		<param-value>SLF4J</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.ws.rs.Application</param-name>
+		<param-value>com.steatoda.muddywaters.whale.servlet.rest.RestApplication</param-value>
+	</context-param>
+    
+	<!-- NOTE: register only GuiceFilter here and all the other filters/servlets in com.steatoda.muddywaters.whale.servlet.WhaleServletModule -->
+	<filter>
+		<filter-name>GuiceFilter</filter-name>
+		<filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>GuiceFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<welcome-file-list>
+		<welcome-file>/index.html</welcome-file>
+	</welcome-file-list>
+	
+</web-app>
