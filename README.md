@@ -27,6 +27,12 @@ wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16001/eat
 
 You think you have something faster? *"Talk is cheap, show me the code."* - Linus Torvalds.
 
+#### FatJar version
+
+Build: `./gradlew shark:fatJar`
+
+Run: `java -jar shark/build/libs/shark-bundle-1.0.0.jar`
+
 ## Whale
 
 Hand-crafted, spring-boot-style REST server with all the bells and whistles (dependency injection, routing, convertors, ...).
