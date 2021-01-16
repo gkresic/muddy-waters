@@ -12,6 +12,22 @@ dependencies {
 
 }
 
+task fatJar(type: Jar) {
+	manifest {
+		attributes 'Main-Class': "${mainClassName}"
+	}
+	baseName = "${project.name}-bundle"
+	from {
+		configurations.compile.collect {
+			it.isDirectory() ? it : zipTree(it)
+		}
+		configurations.runtimeClasspath.collect {
+			it.isDirectory() ? it : zipTree(it)
+		}
+	}
+	with jar
+}
+
 run {
 	standardInput = System.in
 	args = [ 'mode=production' ]
