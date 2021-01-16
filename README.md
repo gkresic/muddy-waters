@@ -53,3 +53,21 @@ curl -v -H "Accept: application/json" -H "Content-Type: application/json" --data
 wrk -t4 -c400 -d10s -s payload-10.lua http://localhost:16002/api/eat
 wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16002/api/eat
 ```
+
+## Megalodon
+
+[Spring Boot](https://github.com/spring-projects/spring-boot) version.
+
+Run:
+
+```
+java -jar megalodon/build/libs/megalodon-1.0.0.jar
+```
+
+Test & benchmark:
+
+```
+curl -v -H "Accept: application/json" -H "Content-Type: application/json" --data @payload-10.json "http://localhost:16003/eat"
+wrk -t4 -c400 -d10s -s payload-10.lua http://localhost:16003/eat
+wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16003/eat
+```
