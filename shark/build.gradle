@@ -16,7 +16,7 @@ task fatJar(type: Jar) {
 	manifest {
 		attributes 'Main-Class': "${mainClassName}"
 	}
-	baseName = "${project.name}-bundle"
+	archiveBaseName = "${project.name}-bundle"
 	from {
 		configurations.compile.collect {
 			it.isDirectory() ? it : zipTree(it)

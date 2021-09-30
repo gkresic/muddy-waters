@@ -1,11 +1,23 @@
 plugins {
-	id 'org.springframework.boot' version '2.4.2'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'application'
+	id 'org.springframework.boot' version '2.5.5'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
+
+mainClassName = 'com.steatoda.muddywaters.megalodon.MegalodonApplication'
 
 dependencies {
 
 	implementation	'org.springframework.boot:spring-boot-starter-web'
 	
 }
+
+run {
+	standardInput = System.in
+}
+
+build.dependsOn installDist
+
+distTar.enabled = false
+distZip.enabled = false

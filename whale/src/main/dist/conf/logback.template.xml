@@ -11,7 +11,7 @@
 		</encoder>
 	</appender>
 
-	<logger name="com.steatoda" level="INFO">	<!-- additivity="false" suppresses logging? -->
+	<logger name="com.steatoda" additivity="false" level="INFO">
 		<appender-ref ref="STDOUT"/>
 	</logger>
 
