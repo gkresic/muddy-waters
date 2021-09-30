@@ -6,6 +6,7 @@ allprojects {
 
 	apply plugin: 'java'
 	apply plugin: 'eclipse'
+	apply plugin: 'idea'
 
 	sourceCompatibility = JavaVersion.VERSION_11
 
@@ -16,6 +17,12 @@ allprojects {
 			jdt {
 				javaRuntimeName = rootProject.getProperty("eclipse.jdt.javaRuntimeName")	// here "project" references *Eclipse* project, so use "rootProject" instead
 			}
+		}
+	}
+
+	idea {
+		module {
+			jdkName = 11
 		}
 	}
 
