@@ -72,3 +72,31 @@ curl -v -H "Accept: application/json" -H "Content-Type: application/json" --data
 wrk -t4 -c400 -d10s -s payload-10.lua http://localhost:16003/eat
 wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16003/eat
 ```
+
+## Swordfish
+
+Vanilla [Quarkus](https://quarkus.io/) implementation.
+
+Run:
+
+```
+cd swordfish/build/quarkus-app/
+$JAVA_HOME/bin/java -classpath quarkus-run.jar io.quarkus.bootstrap.runner.QuarkusEntryPoint
+```
+
+Test & benchmark:
+
+```
+curl -v -H "Accept: application/json" -H "Content-Type: application/json" --data @payload-10.json "http://localhost:16004/eat"
+wrk -t4 -c400 -d10s -s payload-10.lua http://localhost:16004/eat
+wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16004/eat
+```
+
+#### Native version
+
+Native version requires [GraalVM](https://www.graalvm.org/) or [Mandrel](https://github.com/graalvm/mandrel).
+
+Build: `./gradlew :swordfish:build -Dquarkus.package.type=native`
+
+Run: `swordfish/build/swordfish-1.0.0-runner`
+
