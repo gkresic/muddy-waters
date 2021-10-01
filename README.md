@@ -81,7 +81,7 @@ Run:
 
 ```
 cd swordfish/build/quarkus-app/
-$JAVA_HOME/bin/java -classpath quarkus-run.jar io.quarkus.bootstrap.runner.QuarkusEntryPoint
+$JAVA_HOME/bin/java -jar quarkus-run.jar
 ```
 
 Test & benchmark:
