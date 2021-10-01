@@ -33,6 +33,7 @@
 		<Set name="headerCacheSize">512</Set>
 		<Set name="delayDispatchUntilContent">true</Set>
  		<Set name="maxErrorDispatches">10</Set>
+		<Set name="sendServerVersion">false</Set>
 	</New>
 
 	<Call name="addConnector">
