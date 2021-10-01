@@ -31,7 +31,7 @@ You think you have something faster? *"Talk is cheap, show me the code."* - Linu
 
 Build: `./gradlew shark:fatJar`
 
-Run: `java -jar shark/build/libs/shark-bundle-1.0.0.jar`
+Run: `$JAVA_HOME/bin/java -jar shark/build/libs/shark-bundle-1.0.0.jar`
 
 ## Whale
 
