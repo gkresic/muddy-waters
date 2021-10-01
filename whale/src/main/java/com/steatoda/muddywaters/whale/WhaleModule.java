@@ -38,7 +38,6 @@ public class WhaleModule extends AbstractModule {
 		jsonFactory.configure(JsonParser.Feature.AUTO_CLOSE_SOURCE, false);
 		ObjectMapper mapper = new ObjectMapper(jsonFactory)
 			.configure(SerializationFeature.WRAP_ROOT_VALUE, false)
-			.configure(SerializationFeature.INDENT_OUTPUT, true)
 			.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
 			.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 			.configure(MapperFeature.USE_WRAPPER_NAME_AS_PROPERTY_NAME, true)
