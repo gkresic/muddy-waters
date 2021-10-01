@@ -100,3 +100,30 @@ Build: `./gradlew :swordfish:build -Dquarkus.package.type=native`
 
 Run: `swordfish/build/swordfish-1.0.0-runner`
 
+## Sailfish
+
+Vanilla [Micronaut](https://micronaut.io/) implementation.
+
+Run:
+
+```
+cd sailfish/build/install/sailfish/
+bin/sailfish
+```
+
+Test & benchmark:
+
+```
+curl -v -H "Accept: application/json" -H "Content-Type: application/json" --data @payload-10.json "http://localhost:16005/eat"
+wrk -t4 -c400 -d10s -s payload-10.lua http://localhost:16005/eat
+wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16005/eat
+```
+
+#### Native version
+
+Native version requires [GraalVM](https://www.graalvm.org/).
+
+Build: `./gradlew :sailfish:nativeImage`
+
+Run: `sailfish/build/native-image/application`
+

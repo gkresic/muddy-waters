@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PayloadController {
 
 	@PostMapping("/eat")
-	Payload eat(@RequestBody List<Payload> payloads) {
+	public Payload eat(@RequestBody List<Payload> payloads) {
 		
 		Payload max = new Payload();
 
