@@ -48,17 +48,6 @@ run {
 	standardInput = System.in
 }
 
-task processWar(type: Copy) {
-    from('src/main/dist/war') {
-        include '**/*'
-    }
-    into "${project.buildDir}/war/main"
-}
-
-classes {
-    classes.dependsOn processWar
-}
-
 build.dependsOn installDist
 
 distTar.enabled = false

@@ -6,12 +6,14 @@ import org.eclipse.jetty.server.handler.HandlerWrapper;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.eclipse.jetty.xml.XmlConfiguration;
+import org.jboss.resteasy.plugins.guice.GuiceResteasyBootstrapServletContextListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.eventbus.EventBus;
 
-import com.steatoda.muddywaters.whale.servlet.rest.WhaleGuiceResteasyBootstrapServletContextListener;
+import java.io.FileNotFoundException;
+import java.net.URL;
 
 public class Whale {
 
@@ -34,15 +36,24 @@ public class Whale {
 		eventBus.post(new WhalePreInitEvent(this));
 
 		try {
-			XmlConfiguration jettyConf = new XmlConfiguration(Resource.newResource(Thread.currentThread().getContextClassLoader().getResource("jetty.xml")));
-			server = Server.class.cast(jettyConf.configure());
+			Resource resource = Resource.newResource(Thread.currentThread().getContextClassLoader().getResource("jetty.xml"));
+			if (resource == null)
+				throw new FileNotFoundException("Jetty configuration (jetty.xml) not found on classpath");
+			XmlConfiguration jettyConf = new XmlConfiguration(resource);
+			server = (Server) jettyConf.configure();
 			// have to add ServletContextListener here (instead in web.xml) because otherwise it won't see our WhaleInjector as parent
 			Handler handler = server.getHandler();
-			while (handler != null && !WebAppContext.class.isInstance(handler) && HandlerWrapper.class.isInstance(handler))
-				handler = HandlerWrapper.class.cast(handler).getHandler();
+			while (handler instanceof HandlerWrapper && !(handler instanceof WebAppContext))
+				handler = ((HandlerWrapper) handler).getHandler();
 			if (handler == null)
 				throw new RuntimeException("No WebAppContext handler configured in Jetty?!");
-			WebAppContext.class.cast(handler).addEventListener(WhaleInjector.get().getInstance(WhaleGuiceResteasyBootstrapServletContextListener.class));
+			assert handler instanceof WebAppContext;	// just to silence IntelliJ
+			WebAppContext context = (WebAppContext) handler;
+			URL webAppDir = Thread.currentThread().getContextClassLoader().getResource("war");
+			if (webAppDir == null)
+				throw new FileNotFoundException("Jetty root (war) not found on classpath");
+			context.setResourceBase(webAppDir.toURI().toString());
+			context.addEventListener(WhaleInjector.get().getInstance(GuiceResteasyBootstrapServletContextListener.class));
 		} catch (Exception e) {
 			throw new RuntimeException("Error configuring Jetty", e);
 		}

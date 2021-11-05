@@ -4,6 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import com.steatoda.muddywaters.whale.servlet.WhaleServletModule;
+import com.steatoda.muddywaters.whale.servlet.rest.ResourceModule;
 
 public class WhaleInjector {
 
@@ -16,7 +17,8 @@ public class WhaleInjector {
 	private WhaleInjector() {
 		injector = Guice.createInjector(
 			new WhaleModule(),
-			new WhaleServletModule()
+			new WhaleServletModule(),
+			new ResourceModule()
 		);
 	}
 
