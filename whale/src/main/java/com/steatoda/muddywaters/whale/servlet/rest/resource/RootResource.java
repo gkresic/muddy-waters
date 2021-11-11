@@ -52,7 +52,7 @@ public class RootResource {
 				max.text = payload.text;
 		}
 
-		Log.debug("Out of {} payloads, max was {}:{} ", payloads.size(), max.text, max.number);
+		//Log.debug("Out of {} payloads, max was {}:{} ", payloads.size(), max.text, max.number);
 
 		return max;
 		
