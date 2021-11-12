@@ -127,3 +127,23 @@ Build: `./gradlew :sailfish:nativeImage`
 
 Run: `sailfish/build/native-image/application`
 
+## Dolphin
+
+Hand-crafted REST server with most of the bells and whistles.
+Build using [Dagger](https://dagger.dev/) + [Vert.x](https://vertx.io/) + [Jackson](https://github.com/FasterXML/jackson).
+
+Run:
+
+```
+cd dolphin/build/install/dolphin/
+bin/dolphin
+```
+
+Test & benchmark:
+
+```
+curl -v -H "Accept: application/json" -H "Content-Type: application/json" --data @payload-10.json "http://localhost:16006/eat"
+wrk -t4 -c400 -d10s -s payload-10.lua http://localhost:16006/eat
+wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16006/eat
+```
+
