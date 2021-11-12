@@ -20,6 +20,9 @@ public class Handler implements ReqRespHandler {
 
 		Iterator<Payload> iter = Json.iterateOver(Payload.class, new ByteArrayInputStream(req.body()));
 
+		if (iter == null)
+			throw new RuntimeException("Empty input?!");
+
 		while (iter.hasNext()) {
 			Payload payload = iter.next();
 			if (max.number == null || max.number < payload.number)
