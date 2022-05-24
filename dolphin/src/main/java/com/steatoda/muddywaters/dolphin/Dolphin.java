@@ -12,18 +12,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Singleton
 public class Dolphin {
 
 	@Inject
 	public Dolphin(EventBus eventBus, Vertx vertx) {
 		this.eventBus = eventBus;
 		this.vertx = vertx;
+		eventBus.register(this);
 	}
 
 	/** One dummy method with {@link Subscribe} annotation to make sure annotation processor is triggered */
