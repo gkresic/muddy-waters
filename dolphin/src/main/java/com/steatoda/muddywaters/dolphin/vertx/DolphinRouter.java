@@ -37,7 +37,7 @@ public class DolphinRouter extends RouterImpl {
 		get("/status").respond(this::status);
 
 		post("/eat")
-			.consumes("application/json")
+			.consumes("application/json")	// TODO use MediaType from Guava
 			.produces("application/json")
 			.handler(BodyHandler.create())
 			.handler(this::eat1);
@@ -100,7 +100,7 @@ public class DolphinRouter extends RouterImpl {
 	}
 
 	private Future<DolphinStatus> status(RoutingContext context) {
-		return Future.succeededFuture(new DolphinStatus());
+		return Future.succeededFuture(new DolphinStatus());	// TODO use Dagger
 	}
 
 	/**
