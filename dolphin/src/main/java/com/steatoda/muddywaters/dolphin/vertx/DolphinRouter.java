@@ -108,7 +108,7 @@ public class DolphinRouter extends RouterImpl {
 	 */
 	private void eat1(RoutingContext context) {
 
-		Payload[] payloads = Json.decodeValue(context.getBody(), Payload[].class);
+		Payload[] payloads = Json.decodeValue(context.body().buffer(), Payload[].class);
 
 		Payload max = new Payload();
 
@@ -135,7 +135,6 @@ public class DolphinRouter extends RouterImpl {
 		Payload max = new Payload();
 
 		parser.handler(event -> {
-			//noinspection EnhancedSwitchMigration
 			switch (event.type()) {
 //				case START_ARRAY:
 //					Log.info("Array START");
@@ -153,6 +152,8 @@ public class DolphinRouter extends RouterImpl {
 			}
 		});
 
+		context.request().resume();
+
 	}
 
 	/**
@@ -164,7 +165,7 @@ public class DolphinRouter extends RouterImpl {
 
 			Payload max = new Payload();
 
-			Iterator<Payload> iter = DslJsonPayload.iterateOver(Payload.class, new ByteBufInputStream(context.getBody().getByteBuf()));
+			Iterator<Payload> iter = DslJsonPayload.iterateOver(Payload.class, new ByteBufInputStream(context.body().buffer().getByteBuf()));
 
 			if (iter == null)
 				throw new RuntimeException("Empty input?!");
@@ -269,7 +270,7 @@ public class DolphinRouter extends RouterImpl {
 
 		long start = System.currentTimeMillis();
 
-		Payload[] payloads = Json.decodeValue(context.getBody(), Payload[].class);
+		Payload[] payloads = Json.decodeValue(context.body().buffer(), Payload[].class);
 
 		Log.info("Parsed body 1 ({}) in {} ms", payloads.length, System.currentTimeMillis() - start);
 
@@ -281,7 +282,7 @@ public class DolphinRouter extends RouterImpl {
 
 		long start = System.currentTimeMillis();
 
-		com.fasterxml.jackson.core.JsonParser jsonParser = DatabindCodec.createParser(context.getBody());
+		com.fasterxml.jackson.core.JsonParser jsonParser = DatabindCodec.createParser(context.body().buffer());
 
 		Payload[] payloads = DatabindCodec.fromParser(jsonParser, Payload[].class);
 
