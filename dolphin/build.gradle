@@ -1,7 +1,5 @@
 apply plugin: 'application'
 
-mainClassName = 'com.steatoda.muddywaters.dolphin.DolphinCmd'
-
 dependencies {
 
 	implementation 'ch.qos.logback:logback-core:1.2.6'
@@ -35,6 +33,10 @@ processResources {
 compileJava {
 	// https://greenrobot.org/eventbus/documentation/subscriber-index/
 	options.compilerArgs += '-AeventBusIndex=com.steatoda.muddywaters.dolphin.DolphinEventBusIndex'
+}
+
+application {
+	mainClass = 'com.steatoda.muddywaters.dolphin.DolphinCmd'
 }
 
 distributions {

@@ -3,12 +3,14 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
 
-mainClassName = 'com.steatoda.muddywaters.megalodon.MegalodonApplication'
-
 dependencies {
 
 	implementation	'org.springframework.boot:spring-boot-starter-web'
 	
+}
+
+application {
+	mainClass = 'com.steatoda.muddywaters.megalodon.MegalodonApplication'
 }
 
 run {

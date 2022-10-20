@@ -2,8 +2,6 @@ plugins {
 	id 'io.quarkus' version '2.2.3.Final'
 }
 
-mainClassName = 'io.quarkus.bootstrap.runner.QuarkusEntryPoint'
-
 dependencies {
 	implementation enforcedPlatform('io.quarkus.platform:quarkus-bom:2.2.3.Final')
 	implementation 'io.quarkus:quarkus-config-yaml'
@@ -11,6 +9,10 @@ dependencies {
 	implementation 'io.quarkus:quarkus-arc'
 	implementation 'io.quarkus:quarkus-resteasy'
 	implementation 'io.quarkus:quarkus-resteasy-jackson'
+}
+
+application {
+	mainClass = 'io.quarkus.bootstrap.runner.QuarkusEntryPoint'
 }
 
 run {

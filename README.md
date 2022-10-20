@@ -2,7 +2,7 @@
 
 Java REST benchmarks.
 
-Minimum requirements: Java 11 on path (or set `JAVA_HOME`)
+Minimum requirements: Java 17 on path (or set `JAVA_HOME`)
 
 Build: `./gradlew build`
 
