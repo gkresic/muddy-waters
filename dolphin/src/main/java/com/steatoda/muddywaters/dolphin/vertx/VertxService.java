@@ -34,7 +34,7 @@ public class VertxService {
 
 	@Subscribe
 	@SuppressWarnings("unused")
-	public void onCityPreStart(DolphinPreStartEvent event) {
+	public void onDolphinPreStart(DolphinPreStartEvent event) {
 
 		try {
 			awaitComplete(CompositeFuture.all(
@@ -52,7 +52,7 @@ public class VertxService {
 
 	@Subscribe
 	@SuppressWarnings("unused")
-	public void onCityPreStop(DolphinPreStopEvent event) {
+	public void onDolphinPreStop(DolphinPreStopEvent event) {
 
 		int verticlesCount = verticeDeploymentIds.size();
 
@@ -71,7 +71,7 @@ public class VertxService {
 
 	@Subscribe
 	@SuppressWarnings("unused")
-	public void onCityDestroy(DolphinDestroyEvent event) {
+	public void onDolphinDestroy(DolphinDestroyEvent event) {
 
 		try {
 			Promise<Void> vertxClosePromise = Promise.promise();
