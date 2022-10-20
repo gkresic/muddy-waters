@@ -40,7 +40,7 @@ public interface DolphinModule {
 				   .configure(MapperFeature.AUTO_DETECT_FIELDS, false)
 				   .configure(MapperFeature.AUTO_DETECT_GETTERS, false)
 				   .configure(MapperFeature.AUTO_DETECT_IS_GETTERS, false)
-				   .configure(SerializationFeature.INDENT_OUTPUT, true)
+				   .configure(SerializationFeature.INDENT_OUTPUT, false)
 				   .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, true)
 				   .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 				   .serializationInclusion(JsonInclude.Include.NON_NULL)
