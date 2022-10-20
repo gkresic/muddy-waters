@@ -5,6 +5,7 @@
 /.settings
 /bin/
 /build/
+/local/
 /gradle.properties
 /gradle-app.setting
 
