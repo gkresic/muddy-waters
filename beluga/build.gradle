@@ -1,0 +1,65 @@
+apply plugin: 'application'
+
+dependencies {
+
+	implementation 'ch.qos.logback:logback-core:1.4.3'
+	implementation 'ch.qos.logback:logback-classic:1.4.3'
+	implementation 'org.slf4j:slf4j-api:2.0.3'
+
+	implementation 'org.greenrobot:eventbus-java:3.3.1'
+	annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.3.1'
+
+	implementation 'com.google.dagger:dagger:2.44'
+	annotationProcessor 'com.google.dagger:dagger-compiler:2.44'
+
+	implementation 'io.javalin:javalin:5.1.1'
+
+	implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.4'
+	implementation 'com.fasterxml.jackson.core:jackson-core:2.13.4'
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.4'
+
+	implementation 'com.dslplatform:dsl-json:1.9.9'
+	implementation 'com.dslplatform:dsl-json-java8:1.9.9'
+	annotationProcessor 'com.dslplatform:dsl-json-java8:1.9.9'
+
+}
+
+processResources {
+	filesMatching(["**/beluga.properties"]) {
+		expand version: version
+	}
+}
+
+compileJava {
+	// https://greenrobot.org/eventbus/documentation/subscriber-index/
+	options.compilerArgs += '-AeventBusIndex=com.steatoda.muddywaters.beluga.BelugaEventBusIndex'
+}
+
+application {
+	mainClass = 'com.steatoda.muddywaters.beluga.BelugaCmd'
+}
+
+distributions {
+	main {
+		contents {
+			rename('logback.template.xml', 'logback.xml')
+		}
+	}
+}
+
+startScripts {
+	doLast {
+		unixScript.text = unixScript.text.replace('CLASSPATH=', 'CLASSPATH=$BELUGA_CONF:$APP_HOME/conf:')
+		windowsScript.text = windowsScript.text.replace('set CLASSPATH=', 'set CLASSPATH=%BELUGA_CONF%;%APP_HOME%\\conf;')
+	}
+}
+
+run {
+	classpath += files("${System.env.BELUGA_CONF}", "${System.properties.BELUGA_CONF}", "${project.buildDir}/install/beluga/conf")
+	standardInput = System.in
+}
+
+build.dependsOn installDist
+
+distTar.enabled = false
+distZip.enabled = false

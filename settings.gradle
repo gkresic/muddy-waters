@@ -7,4 +7,5 @@ include 'swordfish'
 include 'sailfish'
 include 'dolphin'
 include 'orca'
+include 'beluga'
 

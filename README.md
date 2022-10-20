@@ -156,7 +156,7 @@ Run:
 
 ```
 cd orca/build/install/orca/
-bin/dolphin
+bin/orca
 ```
 
 Test & benchmark:
@@ -165,5 +165,25 @@ Test & benchmark:
 curl -v -H "Accept: application/json" -H "Content-Type: application/json" --data @payload-10.json "http://localhost:16007/eat"
 wrk -t4 -c400 -d10s -s payload-10.lua http://localhost:16007/eat
 wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16007/eat
+```
+
+## Beluga
+
+Hand-crafted REST server with most of the bells and whistles.
+Build using [Dagger](https://dagger.dev/) + [Javalin](https://sparkjava.com/) + [Jackson](https://github.com/FasterXML/jackson).
+
+Run:
+
+```
+cd beluga/build/install/beluga/
+bin/beluga
+```
+
+Test & benchmark:
+
+```
+curl -v -H "Accept: application/json" -H "Content-Type: application/json" --data @payload-10.json "http://localhost:16008/eat"
+wrk -t4 -c400 -d10s -s payload-10.lua http://localhost:16008/eat
+wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16008/eat
 ```
 
