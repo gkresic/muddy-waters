@@ -6,4 +6,5 @@ include 'megalodon'
 include 'swordfish'
 include 'sailfish'
 include 'dolphin'
+include 'orca'
 
