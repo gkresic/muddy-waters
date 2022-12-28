@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.steatoda.muddywaters.beluga.proto";
+
+package muddywaters.beluga;
+
+message Payload {
+  string text = 1;
+  int32 number = 2;
+}
+
+message PayloadRequest {
+  repeated Payload payloads = 1;
+}
+
+message PayloadResponse {
+  Payload payload = 1;
+}

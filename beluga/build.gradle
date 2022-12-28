@@ -1,4 +1,18 @@
+buildscript {
+	repositories {
+		gradlePluginPortal()
+	}
+	dependencies {
+		classpath 'com.google.protobuf:protobuf-gradle-plugin:0.9.1'
+	}
+}
+
 apply plugin: 'application'
+apply plugin: 'com.google.protobuf'
+
+ext {
+	protobufVersion = '3.21.12'
+}
 
 dependencies {
 
@@ -18,6 +32,8 @@ dependencies {
 	implementation 'com.fasterxml.jackson.core:jackson-core:2.13.4'
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.4'
 
+	implementation "com.google.protobuf:protobuf-java:${protobufVersion}"
+
 	implementation 'com.dslplatform:dsl-json:1.9.9'
 	implementation 'com.dslplatform:dsl-json-java8:1.9.9'
 	annotationProcessor 'com.dslplatform:dsl-json-java8:1.9.9'
@@ -28,6 +44,14 @@ processResources {
 	filesMatching(["**/beluga.properties"]) {
 		expand version: version
 	}
+}
+
+protobuf {
+	protoc {
+		artifact = "com.google.protobuf:protoc:${protobufVersion}"
+	}
+	// use more standard 'sourceS' instead of 'source' (TODO doesn't work, results in empty 'generated' folder?)
+	//generatedFilesBaseDir = "$buildDir/generated/sources/proto"
 }
 
 compileJava {

@@ -4,6 +4,7 @@ import com.dslplatform.json.DslJson;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.steatoda.muddywaters.beluga.Payload;
+import com.steatoda.muddywaters.beluga.proto.PayloadRequest;
 import io.javalin.apibuilder.ApiBuilder;
 import io.javalin.apibuilder.EndpointGroup;
 import io.javalin.http.Context;
@@ -25,11 +26,15 @@ public class RootEndpointGroup implements EndpointGroup {
 
 		ApiBuilder.get("/hello", this::hello);
 
+		ApiBuilder.post("/eat", this::eat1);
+
 		ApiBuilder.post("/eat1", this::eat1);
 
 		ApiBuilder.post("/eat2", this::eat2);
 
 		ApiBuilder.post("/eat3", this::eat3);
+
+		ApiBuilder.post("/eatProtobuf", this::eatProtobuf);
 
 	}
 
@@ -105,6 +110,28 @@ public class RootEndpointGroup implements EndpointGroup {
 		context
 			.contentType("application/json")
 			.result(ostream.toByteArray())
+		;
+
+	}
+
+	/** Protobuf payload. */
+	private void eatProtobuf(Context context) throws IOException {
+
+		PayloadRequest protoRequest = PayloadRequest.parseFrom(context.req().getInputStream());
+
+		Payload max = new Payload();
+
+		for (int index = 0; index < protoRequest.getPayloadsCount(); ++index) {
+			com.steatoda.muddywaters.beluga.proto.Payload protoPayload = protoRequest.getPayloads(index);
+			if (max.number == null || max.number < protoPayload.getNumber())
+				max.number = protoPayload.getNumber();
+			if (max.text == null || max.text.compareTo(protoPayload.getText()) < 0)
+				max.text = protoPayload.getText();
+		}
+
+		context
+			.contentType("application/json")
+			.result(jsonMapper.writeValueAsString(max))
 		;
 
 	}

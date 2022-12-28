@@ -187,6 +187,14 @@ wrk -t4 -c400 -d10s -s payload-10.lua http://localhost:16008/eat
 wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16008/eat
 ```
 
+Protobuf payload:
+
+```
+curl -v -H "Accept: application/json" -H "Content-Type: application/protobuf" --data-binary @beluga/payload-10.proto.message "http://localhost:16008/eatProtobuf"
+wrk -t4 -c400 -d10s -s beluga/payload-10.lua http://localhost:16008/eatProtobuf
+wrk -t4 -c400 -d10s -s beluga/payload-100.lua http://localhost:16008/eatProtobuf
+```
+
 ## Kaluga
 
 Hand-crafted REST server with most of the bells and whistles.

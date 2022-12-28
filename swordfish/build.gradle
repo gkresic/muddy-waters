@@ -2,6 +2,8 @@ plugins {
 	id 'io.quarkus' version '2.2.3.Final'
 }
 
+apply plugin: 'application'
+
 dependencies {
 	implementation enforcedPlatform('io.quarkus.platform:quarkus-bom:2.2.3.Final')
 	implementation 'io.quarkus:quarkus-config-yaml'
