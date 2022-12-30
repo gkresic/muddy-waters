@@ -215,3 +215,30 @@ wrk -t4 -c400 -d10s -s payload-10.lua http://localhost:16009/eat
 wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16009/eat
 ```
 
+# Out of competition
+
+## Plankton
+
+gRPC server.
+Build using [gRPC](https://grpc.io/) + [Protocol buffers](https://developers.google.com/protocol-buffers/).
+
+Run:
+
+```
+cd plankton/build/install/plankton/
+bin/plankton
+```
+
+Test & benchmark:
+
+```
+./gradlew :plankton:benchmark
+```
+
+Using [ghz](https://ghz.sh/):
+
+```
+ghz --insecure --proto=plankton/src/main/proto/ping.proto --call=muddywaters.plankton.PingService/Ping --duration=10s --duration-stop=wait localhost:17001
+ghz --insecure --proto=plankton/src/main/proto/payload.proto --call=muddywaters.plankton.EatService/EatOne --duration=10s --duration-stop=wait --data='{"text":"foo","number":42}' localhost:17001
+ghz --insecure --proto=plankton/src/main/proto/payload.proto --call=muddywaters.plankton.EatService/EatStream --duration=10s --duration-stop=wait --data-file=payload-10.json localhost:17001
+```

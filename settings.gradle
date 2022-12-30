@@ -10,3 +10,5 @@ include 'orca'
 include 'beluga'
 include 'kaluga'
 
+include 'plankton'
+
