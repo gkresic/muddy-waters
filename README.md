@@ -81,7 +81,7 @@ Run:
 
 ```
 cd swordfish/build/quarkus-app/
-$JAVA_HOME/bin/java -jar quarkus-run.jar
+java -jar quarkus-run.jar
 ```
 
 Test & benchmark:
@@ -95,6 +95,7 @@ wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16004/eat
 #### Native version
 
 Native version requires [GraalVM](https://www.graalvm.org/) or [Mandrel](https://github.com/graalvm/mandrel).
+Detailed guide on how to build native image is available in this [Quarkus guide](https://quarkus.io/guides/building-native-image).
 
 Build: `./gradlew :swordfish:build -Dquarkus.package.type=native`
 
