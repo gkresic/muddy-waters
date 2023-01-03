@@ -124,9 +124,9 @@ wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16005/eat
 
 Native version requires [GraalVM](https://www.graalvm.org/).
 
-Build: `./gradlew :sailfish:nativeImage`
+Build: `./gradlew :sailfish:nativeCompile`
 
-Run: `sailfish/build/native-image/application`
+Run: `sailfish/build/native/nativeCompile/sailfish`
 
 ## Dolphin
 
