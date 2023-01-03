@@ -92,6 +92,12 @@ wrk -t4 -c400 -d10s -s payload-10.lua http://localhost:16004/eat
 wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16004/eat
 ```
 
+#### jlink version
+
+Build: `./gradlew :swordfish:build :swordfish:runtime`
+
+Run: `swordfish/build/jre/bin/java -jar swordfish/build/quarkus-app/quarkus-run.jar`
+
 #### Native version
 
 Native version requires [GraalVM](https://www.graalvm.org/) or [Mandrel](https://github.com/graalvm/mandrel).
