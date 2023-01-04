@@ -5,6 +5,12 @@ plugins {
 
 apply plugin: 'application'
 
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
 dependencies {
 	implementation enforcedPlatform('io.quarkus.platform:quarkus-bom:2.15.1.Final')
 	implementation 'io.quarkus:quarkus-config-yaml'
