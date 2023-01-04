@@ -1,6 +1,7 @@
 plugins {
 	id 'org.springframework.boot' version '3.0.1'
 	id 'io.spring.dependency-management' version '1.1.0'
+	id 'org.beryx.runtime' version '1.13.0'
 }
 
 apply plugin: 'application'
@@ -15,6 +16,21 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	
+}
+
+runtime {
+	options = [
+		'--strip-debug',
+		'--compress', '2',
+		'--no-header-files',
+		'--no-man-pages'
+	]
+	modules = [
+		'java.desktop',
+		'java.instrument',
+		'java.security.jgss',
+		'java.management'
+	]
 }
 
 application {

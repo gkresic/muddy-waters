@@ -73,6 +73,12 @@ wrk -t4 -c400 -d10s -s payload-10.lua http://localhost:16003/eat
 wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16003/eat
 ```
 
+#### jlink version
+
+Build: `./gradlew :megalodon:runtime`
+
+Run: `megalodon/build/image/bin/megalodon`
+
 ## Swordfish
 
 Vanilla [Quarkus](https://quarkus.io/) implementation.
