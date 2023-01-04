@@ -126,6 +126,12 @@ wrk -t4 -c400 -d10s -s payload-10.lua http://localhost:16005/eat
 wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16005/eat
 ```
 
+#### jlink version
+
+Build: `./gradlew :sailfish:runtime`
+
+Run: `sailfish/build/image/bin/sailfish`
+
 #### Native version
 
 Native version requires [GraalVM](https://www.graalvm.org/).
