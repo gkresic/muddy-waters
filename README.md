@@ -79,6 +79,15 @@ Build: `./gradlew :megalodon:runtime`
 
 Run: `megalodon/build/image/bin/megalodon`
 
+#### Native version
+
+Native version requires [GraalVM](https://www.graalvm.org/).
+Detailed guide on how to build native image is available [here](https://docs.spring.io/spring-boot/docs/current/reference/html/native-image.html).
+
+Build: `./gradlew :megalodon:nativeCompile`
+
+Run: `megalodon/build/native/nativeCompile/megalodon`
+
 ## Swordfish
 
 Vanilla [Quarkus](https://quarkus.io/) implementation.
@@ -107,7 +116,7 @@ Run: `swordfish/build/jre/bin/java -jar swordfish/build/quarkus-app/quarkus-run.
 #### Native version
 
 Native version requires [GraalVM](https://www.graalvm.org/) or [Mandrel](https://github.com/graalvm/mandrel).
-Detailed guide on how to build native image is available in this [Quarkus guide](https://quarkus.io/guides/building-native-image).
+Detailed guide on how to build native image is available [here](https://quarkus.io/guides/building-native-image).
 
 Build: `./gradlew :swordfish:build -Dquarkus.package.type=native`
 
