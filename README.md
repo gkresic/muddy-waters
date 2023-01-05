@@ -150,6 +150,7 @@ Run: `sailfish/build/image/bin/sailfish`
 #### Native version
 
 Native version requires [GraalVM](https://www.graalvm.org/).
+Detailed guide on how to build native image is available [here](https://guides.micronaut.io/latest/micronaut-creating-first-graal-app-gradle-java.html).
 
 Build: `./gradlew :sailfish:nativeCompile`
 
