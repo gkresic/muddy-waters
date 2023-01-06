@@ -6,6 +6,8 @@ Minimum requirements: Java 17 on path (or set `JAVA_HOME`)
 
 Build: `./gradlew build`
 
+Test max RSS with: `/usr/bin/time -v <app-binary>`
+
 ## Shark
 
 Optimized for speed, built using [Rapidoid](https://github.com/rapidoid/rapidoid) + [DSL-JSON](https://github.com/ngs-doo/dsl-json).
