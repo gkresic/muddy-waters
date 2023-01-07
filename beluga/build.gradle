@@ -7,6 +7,10 @@ buildscript {
 	}
 }
 
+plugins {
+	id 'org.beryx.runtime' version '1.13.0'
+}
+
 apply plugin: 'application'
 apply plugin: 'com.google.protobuf'
 
@@ -57,6 +61,18 @@ protobuf {
 compileJava {
 	// https://greenrobot.org/eventbus/documentation/subscriber-index/
 	options.compilerArgs += '-AeventBusIndex=com.steatoda.muddywaters.beluga.BelugaEventBusIndex'
+}
+
+runtime {
+	options = [
+		'--strip-debug',
+		'--compress', '2',
+		'--no-header-files',
+		'--no-man-pages'
+	]
+	modules = [
+		'java.xml'
+	]
 }
 
 application {

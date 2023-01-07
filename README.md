@@ -204,12 +204,7 @@ wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16007/eat
 Hand-crafted REST server with most of the bells and whistles.
 Build using [Dagger](https://dagger.dev/) + [Javalin](https://sparkjava.com/) + [Jackson](https://github.com/FasterXML/jackson).
 
-Run:
-
-```
-cd kaluga/build/install/kaluga/
-bin/kaluga
-```
+Run: `beluga/build/install/beluga/bin/beluga`
 
 Test & benchmark:
 
@@ -218,6 +213,12 @@ curl -v -H "Accept: application/json" -H "Content-Type: application/json" --data
 wrk -t4 -c400 -d10s -s payload-10.lua http://localhost:16008/eat
 wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16008/eat
 ```
+
+#### jlink version
+
+Build: `./gradlew :beluga:runtime`
+
+Run: `beluga/build/image/bin/beluga`
 
 Protobuf payload:
 
