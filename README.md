@@ -12,12 +12,7 @@ Test max RSS with: `/usr/bin/time -v <app-binary>`
 
 Optimized for speed, built using [Rapidoid](https://github.com/rapidoid/rapidoid) + [DSL-JSON](https://github.com/ngs-doo/dsl-json).
 
-Run:
-
-```
-cd shark/build/install/shark/
-bin/shark
-```
+Run: `shark/build/install/shark/bin/shark`
 
 Test & benchmark:
 
@@ -34,6 +29,12 @@ You think you have something faster? *"Talk is cheap, show me the code."* - Linu
 Build: `./gradlew shark:fatJar`
 
 Run: `$JAVA_HOME/bin/java -jar shark/build/libs/shark-bundle-1.0.0.jar`
+
+#### jlink version
+
+Build: `./gradlew :shark:runtime`
+
+Run: `shark/build/image/bin/shark`
 
 ## Whale
 
