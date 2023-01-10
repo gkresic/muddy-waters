@@ -40,7 +40,9 @@ public class VertxService {
 			awaitComplete(CompositeFuture.all(
 				Stream.of(
 					RestVerticle.deploy(vertx)
-				).peek(future -> future.onSuccess(verticeDeploymentIds::add)).collect(Collectors.toList())
+				)
+				.peek(future -> future.onSuccess(verticeDeploymentIds::add))
+				.collect(Collectors.toList())
 			));
 		} catch (Exception e) {
 			throw new RuntimeException("Error deploying vertice(s)", e);
