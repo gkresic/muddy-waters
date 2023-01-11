@@ -210,9 +210,9 @@ Run: `beluga/build/install/beluga/bin/beluga`
 Test & benchmark:
 
 ```
-curl -v -H "Accept: application/json" -H "Content-Type: application/json" --data @payload-10.json "http://localhost:16008/eat"
-wrk -t4 -c400 -d10s -s payload-10.lua http://localhost:16008/eat
-wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16008/eat
+curl -v -H "Accept: application/json" -H "Content-Type: application/json" --data @payload-10.json "http://localhost:16008/rest/eat"
+wrk -t4 -c400 -d10s -s payload-10.lua http://localhost:16008/rest/eat
+wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16008/rest/eat
 ```
 
 #### jlink version
@@ -224,9 +224,9 @@ Run: `beluga/build/image/bin/beluga`
 Protobuf payload:
 
 ```
-curl -v -H "Accept: application/json" -H "Content-Type: application/protobuf" --data-binary @beluga/payload-10.proto.message "http://localhost:16008/eatProtobuf"
-wrk -t4 -c400 -d10s -s beluga/payload-10.lua http://localhost:16008/eatProtobuf
-wrk -t4 -c400 -d10s -s beluga/payload-100.lua http://localhost:16008/eatProtobuf
+curl -v -H "Accept: application/json" -H "Content-Type: application/protobuf" --data-binary @beluga/payload-10.proto.message "http://localhost:16008/rest/eatProtobuf"
+wrk -t4 -c400 -d10s -s beluga/payload-10.lua http://localhost:16008/rest/eatProtobuf
+wrk -t4 -c400 -d10s -s beluga/payload-100.lua http://localhost:16008/rest/eatProtobuf
 ```
 
 ## Kaluga

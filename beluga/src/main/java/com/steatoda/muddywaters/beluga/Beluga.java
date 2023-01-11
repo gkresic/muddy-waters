@@ -1,6 +1,7 @@
 package com.steatoda.muddywaters.beluga;
 
-import com.steatoda.muddywaters.beluga.javalin.JavalinService;
+import com.steatoda.muddywaters.beluga.servlet.JettyService;
+import io.javalin.Javalin;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.NoSubscriberEvent;
 import org.greenrobot.eventbus.Subscribe;
@@ -17,7 +18,8 @@ public class Beluga {
 	@SuppressWarnings("unused")	// extra parameters are injected only to be initialized as soon as possible ("eager singletons")
 	public Beluga(
 		EventBus eventBus,
-		JavalinService javalinService
+		JettyService jettyService,
+		Javalin javalin
 	) {
 		this.eventBus = eventBus;
 		eventBus.register(this);

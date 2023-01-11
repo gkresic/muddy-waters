@@ -1,4 +1,4 @@
-package com.steatoda.muddywaters.beluga.javalin;
+package com.steatoda.muddywaters.beluga.servlet.rest;
 
 import com.dslplatform.json.DslJson;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -24,17 +24,19 @@ public class RootEndpointGroup implements EndpointGroup {
 	@Override
 	public void addEndpoints() {
 
-		ApiBuilder.get("/hello", this::hello);
+		ApiBuilder.get("/bug", this::hello);
 
-		ApiBuilder.post("/eat", this::eat1);
+		ApiBuilder.get("/rest/hello", this::hello);
 
-		ApiBuilder.post("/eat1", this::eat1);
+		ApiBuilder.post("/rest/eat", this::eat1);
 
-		ApiBuilder.post("/eat2", this::eat2);
+		ApiBuilder.post("/rest/eat1", this::eat1);
 
-		ApiBuilder.post("/eat3", this::eat3);
+		ApiBuilder.post("/rest/eat2", this::eat2);
 
-		ApiBuilder.post("/eatProtobuf", this::eatProtobuf);
+		ApiBuilder.post("/rest/eat3", this::eat3);
+
+		ApiBuilder.post("/rest/eatProtobuf", this::eatProtobuf);
 
 	}
 
