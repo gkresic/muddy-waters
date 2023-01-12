@@ -20,7 +20,7 @@ public interface JavalinModule {
 	static Javalin provideJavalin(WebAppContext webappContext, RootEndpointGroup rootEndpointGroup, JsonMapper jsonMapper) {
 
 		Javalin javalin = Javalin.createStandalone(config -> {
-			config.routing.contextPath = "/rest/";
+			//config.routing.contextPath = "/rest/";	// doesn't make any difference
 			config.jsonMapper(new JavalinJackson(jsonMapper));
 		});
 

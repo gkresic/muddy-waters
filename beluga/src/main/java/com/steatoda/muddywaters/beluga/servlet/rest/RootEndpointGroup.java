@@ -17,7 +17,8 @@ import java.util.Iterator;
 public class RootEndpointGroup implements EndpointGroup {
 
 	@Inject
-	public RootEndpointGroup(JsonMapper jsonMapper) {
+	public RootEndpointGroup(EntityEndpointGroup entityEndpointGroup, JsonMapper jsonMapper) {
+		this.entityEndpointGroup = entityEndpointGroup;
 		this.jsonMapper = jsonMapper;
 	}
 
@@ -37,6 +38,8 @@ public class RootEndpointGroup implements EndpointGroup {
 		ApiBuilder.post("/rest/eat3", this::eat3);
 
 		ApiBuilder.post("/rest/eatProtobuf", this::eatProtobuf);
+
+		ApiBuilder.path("/rest/entity", entityEndpointGroup);
 
 	}
 
@@ -140,6 +143,7 @@ public class RootEndpointGroup implements EndpointGroup {
 
 	private static final DslJson<Payload> Json = new DslJson<>();
 
+	private final EntityEndpointGroup entityEndpointGroup;
 	private final JsonMapper jsonMapper;
 
 }
