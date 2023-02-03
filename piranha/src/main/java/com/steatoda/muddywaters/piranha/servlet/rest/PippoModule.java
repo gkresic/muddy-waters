@@ -25,8 +25,7 @@ public interface PippoModule {
 
 		Application application = new Application(pippoSettings);
 
-		// TODO this should go under servlet/filter mapping (it should not catch root)
-		application.addRouteGroup(rootEndpointGroupFactory.create("/rest"));
+		application.addRouteGroup(rootEndpointGroupFactory.create("/"));
 
 		jsonEngine.init(application);
 		application.getContentTypeEngines().setContentTypeEngine(jsonEngine);

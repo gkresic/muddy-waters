@@ -29,12 +29,14 @@ import java.util.EnumSet;
 // based on ro.pippo.jetty.JettyServer (from ro.pippo:pippo-jetty)
 // https://github.com/pippo-java/pippo/blob/master/pippo-server-parent/pippo-jetty/src/main/java/ro/pippo/jetty/JettyServer.java
 @Singleton
-public class PiranhaJettyServer extends AbstractWebServer<WebServerSettings> {
+public class ExternalJettyServer extends AbstractWebServer<WebServerSettings> {
 
 	@Inject
-	public PiranhaJettyServer(Server server, Application pippoApplication) {
+	public ExternalJettyServer(Server server, Application pippoApplication) {
 
 		init(pippoApplication);
+
+		setPippoFilterPath("/rest/*");
 
 		Handler pippoHandler = createPippoHandler();
 		server.setHandler(pippoHandler);
@@ -85,15 +87,17 @@ public class PiranhaJettyServer extends AbstractWebServer<WebServerSettings> {
 	}
 
 	private void addPippoFilter(ServletContextHandler handler) {
-		if (pippoFilterPath == null) {
+
+		if (pippoFilterPath == null)
 			pippoFilterPath = "/*"; // default value
-		}
 
 		EnumSet<DispatcherType> dispatches = EnumSet.of(DispatcherType.REQUEST, DispatcherType.ERROR);
 
 		FilterHolder pippoFilterHolder = new FilterHolder(getPippoFilter());
 		handler.addFilter(pippoFilterHolder, pippoFilterPath, dispatches);
+
 		Log.debug("Using pippo filter for path '{}'", pippoFilterPath);
+
 	}
 
 	/**
