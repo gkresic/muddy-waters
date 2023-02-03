@@ -9,6 +9,7 @@ include 'dolphin'
 include 'orca'
 include 'beluga'
 include 'kaluga'
+include 'piranha'
 
 include 'plankton'
 

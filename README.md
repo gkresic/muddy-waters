@@ -224,9 +224,9 @@ Run: `beluga/build/image/bin/beluga`
 Protobuf payload:
 
 ```
-curl -v -H "Accept: application/json" -H "Content-Type: application/protobuf" --data-binary @beluga/payload-10.proto.message "http://localhost:16008/rest/eatProtobuf"
-wrk -t4 -c400 -d10s -s beluga/payload-10.lua http://localhost:16008/rest/eatProtobuf
-wrk -t4 -c400 -d10s -s beluga/payload-100.lua http://localhost:16008/rest/eatProtobuf
+curl -v -H "Accept: application/json" -H "Content-Type: application/protobuf" --data-binary @piranha/payload-10.proto.message "http://localhost:16008/rest/eatProtobuf"
+wrk -t4 -c400 -d10s -s piranha/payload-10.lua http://localhost:16008/rest/eatProtobuf
+wrk -t4 -c400 -d10s -s piranha/payload-100.lua http://localhost:16008/rest/eatProtobuf
 ```
 
 ## Kaluga
@@ -248,6 +248,27 @@ curl -v -H "Accept: application/json" -H "Content-Type: application/json" --data
 wrk -t4 -c400 -d10s -s payload-10.lua http://localhost:16009/eat
 wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16009/eat
 ```
+
+## Piranha
+
+Hand-crafted REST server with most of the bells and whistles.
+Build using [Dagger](https://dagger.dev/) + [Pippo](http://www.pippo.ro/) + [Jackson](https://github.com/FasterXML/jackson).
+
+Run: `piranha/build/install/piranha/bin/piranha`
+
+Test & benchmark:
+
+```
+curl -v -H "Accept: application/json" -H "Content-Type: application/json" --data @payload-10.json "http://localhost:16010/rest/eat"
+wrk -t4 -c400 -d10s -s payload-10.lua http://localhost:16010/rest/eat
+wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16010/rest/eat
+```
+
+#### jlink version
+
+Build: `./gradlew :piranha:runtime`
+
+Run: `piranha/build/image/bin/piranha`
 
 # Out of competition
 

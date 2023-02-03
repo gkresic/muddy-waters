@@ -1,0 +1,86 @@
+plugins {
+	id 'org.beryx.runtime' version '1.13.0'
+}
+
+apply plugin: 'application'
+
+dependencies {
+
+	implementation 'ch.qos.logback:logback-core:1.4.5'
+	implementation 'ch.qos.logback:logback-classic:1.4.5'
+	implementation 'org.slf4j:slf4j-api:2.0.6'
+
+	implementation 'org.greenrobot:eventbus-java:3.3.1'
+	annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.3.1'
+
+	implementation 'com.google.dagger:dagger:2.44.2'
+	annotationProcessor 'com.google.dagger:dagger-compiler:2.44.2'
+
+	implementation 'org.eclipse.jetty:jetty-server:10.0.13'
+	implementation 'org.eclipse.jetty:jetty-xml:10.0.13'
+	implementation 'org.eclipse.jetty:jetty-webapp:10.0.13'
+
+	implementation 'ro.pippo:pippo:1.13.1'
+
+	implementation 'com.fasterxml.jackson.core:jackson-annotations:2.14.1'
+	implementation 'com.fasterxml.jackson.core:jackson-core:2.14.1'
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.1'
+
+	implementation 'com.dslplatform:dsl-json:1.10.0'
+	implementation 'com.dslplatform:dsl-json-java8:1.10.0'
+	annotationProcessor 'com.dslplatform:dsl-json-java8:1.10.0'
+
+}
+
+processResources {
+	filesMatching(["**/piranha.properties"]) {
+		expand version: version
+	}
+}
+
+compileJava {
+	// https://greenrobot.org/eventbus/documentation/subscriber-index/
+	options.compilerArgs += '-AeventBusIndex=com.steatoda.muddywaters.piranha.PiranhaEventBusIndex'
+}
+
+runtime {
+	options = [
+		'--strip-debug',
+		'--compress', '2',
+		'--no-header-files',
+		'--no-man-pages'
+	]
+	modules = [
+		'java.xml'
+	]
+}
+
+application {
+	mainClass = 'com.steatoda.muddywaters.piranha.PiranhaCmd'
+}
+
+distributions {
+	main {
+		contents {
+			rename('jetty.template.xml', 'jetty.xml')
+			rename('logback.template.xml', 'logback.xml')
+		}
+	}
+}
+
+startScripts {
+	doLast {
+		unixScript.text = unixScript.text.replace('CLASSPATH=', 'CLASSPATH=$PIRANHA_CONF:$APP_HOME/conf:')
+		windowsScript.text = windowsScript.text.replace('set CLASSPATH=', 'set CLASSPATH=%PIRANHA_CONF%;%APP_HOME%\\conf;')
+	}
+}
+
+run {
+	classpath += files("${System.env.PIRANHA_CONF}", "${System.properties.PIRANHA_CONF}", "${project.buildDir}/install/piranha/conf")
+	standardInput = System.in
+}
+
+build.dependsOn installDist
+
+distTar.enabled = false
+distZip.enabled = false
