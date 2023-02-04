@@ -1,4 +1,4 @@
-package com.steatoda.muddywaters.piranha.servlet;
+package com.steatoda.muddywaters.piranha.servlet.rest;
 
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Request;
@@ -37,6 +37,8 @@ public class ExternalJettyServer extends AbstractWebServer<WebServerSettings> {
 		init(pippoApplication);
 
 		setPippoFilterPath("/rest/*");
+
+		// TODO see https://github.com/pippo-java/pippo-demo/tree/master/pippo-demo-servlet
 
 		Handler pippoHandler = createPippoHandler();
 		server.setHandler(pippoHandler);

@@ -1,6 +1,6 @@
 package com.steatoda.muddywaters.piranha;
 
-import com.steatoda.muddywaters.piranha.servlet.ExternalJettyServer;
+import com.steatoda.muddywaters.piranha.servlet.rest.ExternalJettyServer;
 import com.steatoda.muddywaters.piranha.servlet.JettyService;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.NoSubscriberEvent;
