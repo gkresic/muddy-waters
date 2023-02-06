@@ -1,6 +1,7 @@
 package com.steatoda.muddywaters.piranha;
 
 import com.steatoda.muddywaters.piranha.servlet.JettyService;
+import com.steatoda.muddywaters.piranha.servlet.rest.PippoService;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.NoSubscriberEvent;
 import org.greenrobot.eventbus.Subscribe;
@@ -19,7 +20,7 @@ public class Piranha {
 	public Piranha(
 		EventBus eventBus,
 		JettyService jettyService,
-		Application pippoApplication
+		PippoService pippoService
 	) {
 		this.eventBus = eventBus;
 		eventBus.register(this);

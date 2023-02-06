@@ -22,7 +22,6 @@ import java.net.URL;
 public class JettyService {
 
 	@Inject
-	@SuppressWarnings("unused")	// extra parameters are injected only to be initialized as soon as possible ("eager singletons")
 	public JettyService(
 		Server server,
 		WebAppContext webAppContext,

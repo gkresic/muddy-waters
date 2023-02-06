@@ -27,7 +27,7 @@ public interface PippoModule {
 
 	@Provides
 	@Singleton
-	static Application provideApplication(WebAppContext webappContext, PippoSettings pippoSettings, RootEndpointGroup.Factory rootEndpointGroupFactory, PiranhaJacksonJsonEngine jsonEngine) {
+	static Application provideApplication(PippoSettings pippoSettings, RootEndpointGroup.Factory rootEndpointGroupFactory, PiranhaJacksonJsonEngine jsonEngine) {
 
 		Application application = new Application(pippoSettings);
 
@@ -35,11 +35,6 @@ public interface PippoModule {
 
 		jsonEngine.init(application);
 		application.getContentTypeEngines().setContentTypeEngine(jsonEngine);
-
-		PippoFilter pippoFilter = new PippoFilter();
-		pippoFilter.setApplication(application);
-
-		webappContext.addFilter(new FilterHolder(pippoFilter), "/rest/*", EnumSet.of(DispatcherType.REQUEST, DispatcherType.ERROR));
 
 		return application;
 
