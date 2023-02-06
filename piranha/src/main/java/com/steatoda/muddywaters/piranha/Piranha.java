@@ -1,12 +1,12 @@
 package com.steatoda.muddywaters.piranha;
 
-import com.steatoda.muddywaters.piranha.servlet.rest.ExternalJettyServer;
 import com.steatoda.muddywaters.piranha.servlet.JettyService;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.NoSubscriberEvent;
 import org.greenrobot.eventbus.Subscribe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ro.pippo.core.Application;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -19,7 +19,7 @@ public class Piranha {
 	public Piranha(
 		EventBus eventBus,
 		JettyService jettyService,
-		ExternalJettyServer pippoServer
+		Application pippoApplication
 	) {
 		this.eventBus = eventBus;
 		eventBus.register(this);
