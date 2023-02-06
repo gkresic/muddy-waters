@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.io.FileNotFoundException;
+import java.net.URL;
 
 /**
  * <p>Wraps Jetty {@link Server}, manages its lifecycle and makes sure it is closed on app shutdown.</p>
@@ -28,6 +30,19 @@ public class JettyService {
 	) {
 
 		this.server = server;
+
+		try {
+
+			URL webAppDir = Thread.currentThread().getContextClassLoader().getResource("war");
+
+			if (webAppDir == null)
+				throw new FileNotFoundException("Jetty root (war) not found on classpath");
+
+			webAppContext.setResourceBase(webAppDir.toURI().toString());
+
+		} catch (Exception e) {
+			throw new RuntimeException("Error configuring Jetty webapp context", e);
+		}
 
 		eventBus.register(this);
 

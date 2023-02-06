@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Singleton;
 import java.io.FileNotFoundException;
-import java.net.URL;
 
 @Module
 public interface JettyModule {
@@ -44,31 +43,18 @@ public interface JettyModule {
 	@Provides
 	@Singleton
 	static WebAppContext provideWebAppContext(Server server) {
-		try {
 
-			Handler handler = server.getHandler();
-			while (handler instanceof HandlerWrapper && !(handler instanceof WebAppContext))
-				handler = ((HandlerWrapper) handler).getHandler();
+		Handler handler = server.getHandler();
+		while (handler instanceof HandlerWrapper && !(handler instanceof WebAppContext))
+			handler = ((HandlerWrapper) handler).getHandler();
 
-			if (handler == null)
-				throw new RuntimeException("No WebAppContext handler configured in Jetty?!");
+		if (handler == null)
+			throw new RuntimeException("No WebAppContext handler configured in Jetty?!");
 
-			assert handler instanceof WebAppContext;	// just to silence IntelliJ
+		assert handler instanceof WebAppContext;	// just to silence IntelliJ
 
-			WebAppContext context = (WebAppContext) handler;
+		return (WebAppContext) handler;
 
-			URL webAppDir = Thread.currentThread().getContextClassLoader().getResource("war");
-
-			if (webAppDir == null)
-				throw new FileNotFoundException("Jetty root (war) not found on classpath");
-
-			context.setResourceBase(webAppDir.toURI().toString());
-
-			return context;
-
-		} catch (Exception e) {
-			throw new RuntimeException("Error configuring Jetty webapp context", e);
-		}
 	}
 
 	Logger Log = LoggerFactory.getLogger(JettyModule.class);
