@@ -20,7 +20,7 @@ dependencies {
 	implementation 'org.eclipse.jetty:jetty-xml:10.0.13'
 	implementation 'org.eclipse.jetty:jetty-webapp:10.0.13'
 
-	implementation 'ro.pippo:pippo:1.14.0'
+	implementation 'ro.pippo:pippo-core:1.14.0'
 
 	implementation 'com.fasterxml.jackson.core:jackson-annotations:2.14.1'
 	implementation 'com.fasterxml.jackson.core:jackson-core:2.14.1'
