@@ -43,6 +43,7 @@ application {
 distributions {
 	main {
 		contents {
+			rename('helidon.template.yaml', 'helidon.yaml')
 			rename('logback.template.xml', 'logback.xml')
 		}
 	}
