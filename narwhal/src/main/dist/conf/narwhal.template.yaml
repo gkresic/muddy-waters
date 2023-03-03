@@ -1,0 +1,24 @@
+foo: bar
+
+server:
+  type: default
+  maxThreads: 100
+  applicationContextPath: /
+  applicationConnectors:
+    - type: http
+      port: 16011
+  requestLog:
+    appenders: []
+
+logging:
+  level: WARN
+  loggers:
+    "com.steatoda":
+      level: INFO
+      additive: false
+      appenders:
+        - type: console
+          logFormat: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{20}:%line - %msg%n"
+  appenders:
+    - type: console
+      logFormat: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{20}:%line - %msg%n"

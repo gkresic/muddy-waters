@@ -1,0 +1,64 @@
+plugins {
+	id 'org.beryx.runtime' version '1.13.0'
+}
+
+apply plugin: 'application'
+
+dependencies {
+
+	implementation 'io.dropwizard:dropwizard-core:2.1.5'
+
+	implementation 'com.dslplatform:dsl-json:1.9.9'
+	implementation 'com.dslplatform:dsl-json-java8:1.9.9'
+	annotationProcessor 'com.dslplatform:dsl-json-java8:1.9.9'
+
+}
+
+processResources {
+	filesMatching(["**/narwhal.properties"]) {
+		expand version: version
+	}
+}
+
+runtime {
+	options = [
+		'--strip-debug',
+		'--compress', '2',
+		'--no-header-files',
+		'--no-man-pages'
+	]
+	modules = [
+		'java.logging',
+		'java.xml',
+		'java.management'
+	]
+}
+
+application {
+	mainClass = 'com.steatoda.muddywaters.narwhal.NarwhalApplication'
+}
+
+distributions {
+	main {
+		contents {
+			rename('narwhal.template.yaml', 'narwhal.yaml')
+		}
+	}
+}
+
+startScripts {
+	doLast {
+		unixScript.text = unixScript.text.replace('CLASSPATH=', 'CLASSPATH=$NARWHAL_CONF:$APP_HOME/conf:')
+		windowsScript.text = windowsScript.text.replace('set CLASSPATH=', 'set CLASSPATH=%NARWHAL_CONF%;%APP_HOME%\\conf;')
+	}
+}
+
+run {
+	classpath += files("${System.env.NARWHAL_CONF}", "${System.properties.NARWHAL_CONF}", "${project.buildDir}/install/narwhal/conf")
+	standardInput = System.in
+}
+
+build.dependsOn installDist
+
+distTar.enabled = false
+distZip.enabled = false

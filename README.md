@@ -270,6 +270,26 @@ Build: `./gradlew :piranha:runtime`
 
 Run: `piranha/build/image/bin/piranha`
 
+## Narwhal
+
+Vanilla [Dropwizard](https://www.dropwizard.io/) implementation.
+
+Run: `narwhal/build/install/narwhal/bin/narwhal server narwhal.yaml`
+
+Test & benchmark:
+
+```
+curl -v -H "Accept: application/json" -H "Content-Type: application/json" --data @payload-10.json "http://localhost:16011/eat"
+wrk -t4 -c400 -d10s -s payload-10.lua http://localhost:16011/eat
+wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16011/eat
+```
+
+#### jlink version
+
+Build: `./gradlew :narwhal:runtime`
+
+Run: `narwhal/build/image/bin/narwhal server narwhal.yaml`
+
 # Out of competition
 
 ## Plankton
