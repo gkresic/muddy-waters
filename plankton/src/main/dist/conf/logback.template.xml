@@ -3,7 +3,7 @@
 
 <configuration scan="true" scanPeriod="10 seconds">
 
-	<contextName>Beluga</contextName>
+	<contextName>Plankton</contextName>
 
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
