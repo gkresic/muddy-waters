@@ -1,7 +1,6 @@
 package com.steatoda.muddywaters.whale.servlet;
 
-import javax.inject.Singleton;
-
+import jakarta.inject.Singleton;
 import org.jboss.resteasy.plugins.server.servlet.HttpServlet30Dispatcher;
 
 import com.google.inject.servlet.ServletModule;

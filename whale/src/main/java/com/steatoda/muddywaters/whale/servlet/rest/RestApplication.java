@@ -1,9 +1,9 @@
 package com.steatoda.muddywaters.whale.servlet.rest;
 
+import jakarta.ws.rs.core.Application;
+
 import java.util.Collections;
 import java.util.Map;
-
-import javax.ws.rs.core.Application;
 
 /**
  * Place to configure JAX-RS.

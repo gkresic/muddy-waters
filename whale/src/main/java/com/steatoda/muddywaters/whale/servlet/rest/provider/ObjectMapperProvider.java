@@ -1,16 +1,15 @@
 package com.steatoda.muddywaters.whale.servlet.rest.provider;
 
-import javax.inject.Inject;
-import javax.ws.rs.ext.ContextResolver;
-import javax.ws.rs.ext.Provider;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.ext.ContextResolver;
+import jakarta.ws.rs.ext.Provider;
 
 @Provider
 public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
 
 	@Inject
-	ObjectMapperProvider(ObjectMapper mapper) {
+    ObjectMapperProvider(ObjectMapper mapper) {
 		this.mapper = mapper;
 	}
 
