@@ -15,12 +15,6 @@
 		<Set name="detailedDump">false</Set>
 	</Get>
 
-	<Call name="addBean">
-		<Arg>
-			<New class="org.eclipse.jetty.util.thread.ScheduledExecutorScheduler"/>
-		</Arg>
-	</Call>
-
 	<New id="httpConfig" class="org.eclipse.jetty.server.HttpConfiguration">
 		<Set name="secureScheme">https</Set>
 		<Set name="securePort">1843</Set>
@@ -60,7 +54,7 @@
 	</Call>
 
 	<Set name="handler">
-		<New class="org.eclipse.jetty.webapp.WebAppContext">
+		<New class="org.eclipse.jetty.ee10.webapp.WebAppContext">
 			<Set name="contextPath">/</Set>
 			<Set name="parentLoaderPriority">true</Set>
 		</New>
