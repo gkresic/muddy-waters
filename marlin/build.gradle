@@ -1,0 +1,52 @@
+apply plugin: 'application'
+
+ext {
+	logbackVersion = '1.5.6'
+	jettyVersion = '12.0.11'
+	dslJsonVersion = '2.0.2'
+}
+
+dependencies {
+
+	implementation "ch.qos.logback:logback-core:${logbackVersion}"
+	implementation "ch.qos.logback:logback-classic:${logbackVersion}"
+	implementation 'org.slf4j:slf4j-api:2.0.13'
+
+	implementation "org.eclipse.jetty:jetty-core:${jettyVersion}"
+	implementation "org.eclipse.jetty:jetty-xml:${jettyVersion}"
+	implementation "org.eclipse.jetty:jetty-server:${jettyVersion}"
+
+	implementation "com.dslplatform:dsl-json:${dslJsonVersion}"
+
+	annotationProcessor "com.dslplatform:dsl-json:${dslJsonVersion}"
+}
+
+application {
+	mainClass = 'com.steatoda.muddywaters.marlin.MarlinCmd'
+}
+
+distributions {
+	main {
+		contents {
+			rename('jetty.template.xml', 'jetty.xml')
+			rename('logback.template.xml', 'logback.xml')
+		}
+	}
+}
+
+startScripts {
+	doLast {
+		unixScript.text = unixScript.text.replace('CLASSPATH=', 'CLASSPATH=$MARLIN_CONF:$APP_HOME/conf:')
+		windowsScript.text = windowsScript.text.replace('set CLASSPATH=', 'set CLASSPATH=%MARLIN_CONF%;%APP_HOME%\\conf;')
+	}
+}
+
+run {
+	classpath += files("${System.env.MARLIN_CONF}", "${System.properties.MARLIN_CONF}", "${project.buildDir}/install/marlin/conf")
+	standardInput = System.in
+}
+
+build.dependsOn installDist
+
+distTar.enabled = false
+distZip.enabled = false

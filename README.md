@@ -292,26 +292,6 @@ Run: `narwhal/build/image/bin/narwhal server narwhal.yaml`
 
 # Out of competition
 
-## Octopus
-
-GraphQL server.
-Built using [GraphQL Java Servlet](https://www.graphql-java-kickstart.com/servlet/) + [Jetty](https://github.com/eclipse/jetty.project).
-
-Run:
-
-```
-cd octopus/build/install/octopus/
-bin/octopus
-```
-
-Test & benchmark:
-
-```
-curl -v -H "Accept: application/json" -H "Content-Type: application/json" --data @payload-10.graphql.json "http://localhost:17002/graphql"
-wrk -t4 -c400 -d10s -s payload-10.graphql.lua http://localhost:17002/graphql
-wrk -t4 -c400 -d10s -s payload-100.graphql.lua http://localhost:17002/graphql
-```
-
 ## Plankton
 
 gRPC server.
@@ -337,3 +317,44 @@ ghz --insecure --proto=plankton/src/main/proto/ping.proto --call=muddywaters.pla
 ghz --insecure --proto=plankton/src/main/proto/payload.proto --call=muddywaters.plankton.EatService/EatOne --duration=10s --duration-stop=wait --data='{"text":"foo","number":42}' localhost:17001
 ghz --insecure --proto=plankton/src/main/proto/payload.proto --call=muddywaters.plankton.EatService/EatStream --duration=10s --duration-stop=wait --data-file=payload-10.json localhost:17001
 ```
+
+## Octopus
+
+GraphQL server.
+Built using [GraphQL Java Servlet](https://www.graphql-java-kickstart.com/servlet/) + [Jetty](https://github.com/eclipse/jetty.project).
+
+Run:
+
+```
+cd octopus/build/install/octopus/
+bin/octopus
+```
+
+Test & benchmark:
+
+```
+curl -v -H "Accept: application/json" -H "Content-Type: application/json" --data @payload-10.graphql.json "http://localhost:17002/graphql"
+wrk -t4 -c400 -d10s -s payload-10.graphql.lua http://localhost:17002/graphql
+wrk -t4 -c400 -d10s -s payload-100.graphql.lua http://localhost:17002/graphql
+```
+
+## Marlin
+
+Barebone server implemented just as a Jetty Handler.
+Built using [Jetty](https://github.com/eclipse/jetty.project).
+
+Run:
+
+```
+cd marlin/build/install/marlin/
+bin/marlin
+```
+
+Test & benchmark:
+
+```
+curl -v -H "Accept: application/json" -H "Content-Type: application/json" --data @payload-10.json "http://localhost:17003/eat"
+wrk -t4 -c400 -d10s -s payload-10.lua http://localhost:17003/eat
+wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:17003/eat
+```
+
