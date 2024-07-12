@@ -12,13 +12,10 @@ public class WhaleCmd {
 		whale.init();
 		whale.start();
 
-		Runtime.getRuntime().addShutdownHook(new Thread() {
-			@Override
-			public void run() {
-				whale.stop();
-				whale.destroy();
-			}
-		});
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+			whale.stop();
+			whale.destroy();
+		}));
 
 		try {
 			Thread.currentThread().join();

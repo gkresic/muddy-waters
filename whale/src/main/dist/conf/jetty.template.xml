@@ -53,13 +53,6 @@
 		</Arg>
 	</Call>
 
-	<Set name="handler">
-		<New class="org.eclipse.jetty.ee10.webapp.WebAppContext">
-			<Set name="contextPath">/</Set>
-			<Set name="parentLoaderPriority">true</Set>
-		</New>
-	</Set>
-
 	<Set name="stopAtShutdown">true</Set>
 	<Set name="stopTimeout">5000</Set>
 	<Set name="dumpAfterStart">false</Set>

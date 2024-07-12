@@ -1,8 +1,9 @@
 package com.steatoda.muddywaters.whale;
 
+import com.google.inject.servlet.GuiceFilter;
 import dev.resteasy.guice.GuiceResteasyBootstrapServletContextListener;
-import org.eclipse.jetty.ee10.webapp.WebAppContext;
-import org.eclipse.jetty.server.Handler;
+import jakarta.servlet.DispatcherType;
+import org.eclipse.jetty.ee10.servlet.ServletContextHandler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.resource.ResourceFactory;
@@ -14,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import com.google.common.eventbus.EventBus;
 
 import java.io.FileNotFoundException;
-import java.net.URL;
+import java.util.EnumSet;
 import java.util.concurrent.Executors;
 
 public class Whale {
@@ -43,19 +44,12 @@ public class Whale {
 				throw new FileNotFoundException("Jetty configuration (jetty.xml) not found on classpath");
 			XmlConfiguration jettyConf = new XmlConfiguration(resource);
 			server = (Server) jettyConf.configure();
-			// have to add ServletContextListener here (instead in web.xml) because otherwise it won't see our WhaleInjector as parent
-			Handler handler = server.getHandler();
-			while (handler instanceof Handler.Wrapper handlerWrapper && !(handler instanceof WebAppContext))
-				handler = handlerWrapper.getHandler();
-			if (handler == null)
-				throw new RuntimeException("No WebAppContext handler configured in Jetty?!");
-			assert handler instanceof WebAppContext;	// just to silence IntelliJ
-			WebAppContext context = (WebAppContext) handler;
-			URL webAppDir = Thread.currentThread().getContextClassLoader().getResource("war");
-			if (webAppDir == null)
-				throw new FileNotFoundException("Jetty root (war) not found on classpath");
-			context.setWar(webAppDir.toURI().toString());
-			context.addEventListener(WhaleInjector.get().getInstance(GuiceResteasyBootstrapServletContextListener.class));
+			ServletContextHandler handler = new ServletContextHandler();
+			// NOTE: register only GuiceFilter here and all the other filters/servlets in com.steatoda.muddywaters.whale.servlet.WhaleServletModule
+			handler.addFilter(GuiceFilter.class, "/*", EnumSet.of(DispatcherType.REQUEST));
+			// have to add ServletContextListener here (instead in WhaleServletModule) because otherwise it won't see our WhaleInjector as parent
+			handler.addEventListener(WhaleInjector.get().getInstance(GuiceResteasyBootstrapServletContextListener.class));
+			server.setHandler(handler);
 			// enable virtual threads
 			if (server.getThreadPool() instanceof QueuedThreadPool queuedThreadPool)
 				queuedThreadPool.setVirtualThreadsExecutor(Executors.newVirtualThreadPerTaskExecutor());
