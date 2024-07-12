@@ -8,6 +8,8 @@ Build: `./gradlew build`
 
 Test max RSS with: `/usr/bin/time -v <app-binary>`
 
+Test startup time: `date +"%Y-%m-%d %H:%M:%S.%N%:z"; <app-binary>`
+
 ## Shark
 
 Optimized for speed, built using [Rapidoid](https://github.com/rapidoid/rapidoid) + [DSL-JSON](https://github.com/ngs-doo/dsl-json).
