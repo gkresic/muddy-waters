@@ -1,0 +1,14 @@
+type Query {
+    hello: String
+    eat(payloads: [PayloadInput!]!): Payload!
+}
+
+input PayloadInput {
+    text: String!
+    number: Int!
+}
+
+type Payload {
+    text: String!
+    number: Int!
+}

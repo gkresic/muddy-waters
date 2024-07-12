@@ -2,7 +2,7 @@
 
 Java REST benchmarks.
 
-Minimum requirements: Java 17 on path (or set `JAVA_HOME`)
+Minimum requirements: Java 21 on path (or set `JAVA_HOME`)
 
 Build: `./gradlew build`
 
@@ -39,7 +39,7 @@ Run: `shark/build/image/bin/shark`
 ## Whale
 
 Hand-crafted, spring-boot-style REST server with all the bells and whistles (dependency injection, routing, convertors, ...).
-Build using [Guice](https://github.com/google/guice) + [Jetty](https://github.com/eclipse/jetty.project) +
+Built using [Guice](https://github.com/google/guice) + [Jetty](https://github.com/eclipse/jetty.project) +
 [RESTEasy](https://github.com/resteasy/Resteasy) + [Jackson](https://github.com/FasterXML/jackson).
 
 Run:
@@ -162,7 +162,7 @@ Run: `sailfish/build/native/nativeCompile/sailfish`
 ## Dolphin
 
 Hand-crafted REST server with most of the bells and whistles.
-Build using [Dagger](https://dagger.dev/) + [Vert.x](https://vertx.io/) + [Jackson](https://github.com/FasterXML/jackson).
+Built using [Dagger](https://dagger.dev/) + [Vert.x](https://vertx.io/) + [Jackson](https://github.com/FasterXML/jackson).
 
 Run: `dolphin/build/install/dolphin/bin/dolphin`
 
@@ -183,7 +183,7 @@ Run: `dolphin/build/image/bin/dolphin`
 ## Orca
 
 Hand-crafted REST server with most of the bells and whistles.
-Build using [Dagger](https://dagger.dev/) + [Spark](https://sparkjava.com/) + [Jackson](https://github.com/FasterXML/jackson).
+Built using [Dagger](https://dagger.dev/) + [Spark](https://sparkjava.com/) + [Jackson](https://github.com/FasterXML/jackson).
 
 Run:
 
@@ -203,7 +203,7 @@ wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16007/eat
 ## Beluga
 
 Hand-crafted REST server with most of the bells and whistles.
-Build using [Dagger](https://dagger.dev/) + [Javalin](https://sparkjava.com/) + [Jackson](https://github.com/FasterXML/jackson).
+Built using [Dagger](https://dagger.dev/) + [Javalin](https://sparkjava.com/) + [Jackson](https://github.com/FasterXML/jackson).
 
 Run: `beluga/build/install/beluga/bin/beluga`
 
@@ -232,7 +232,7 @@ wrk -t4 -c400 -d10s -s piranha/payload-100.lua http://localhost:16008/rest/eatPr
 ## Kaluga
 
 Hand-crafted REST server with most of the bells and whistles.
-Build using [Dagger](https://dagger.dev/) + [Helidon](https://helidon.io/) + [Jackson](https://github.com/FasterXML/jackson).
+Built using [Dagger](https://dagger.dev/) + [Helidon](https://helidon.io/) + [Jackson](https://github.com/FasterXML/jackson).
 
 Run:
 
@@ -252,7 +252,7 @@ wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16009/eat
 ## Piranha
 
 Hand-crafted REST server with most of the bells and whistles.
-Build using [Dagger](https://dagger.dev/) + [Pippo](http://www.pippo.ro/) + [Jackson](https://github.com/FasterXML/jackson).
+Built using [Dagger](https://dagger.dev/) + [Pippo](http://www.pippo.ro/) + [Jackson](https://github.com/FasterXML/jackson).
 
 Run: `piranha/build/install/piranha/bin/piranha`
 
@@ -292,10 +292,30 @@ Run: `narwhal/build/image/bin/narwhal server narwhal.yaml`
 
 # Out of competition
 
+## Octopus
+
+GraphQL server.
+Built using [GraphQL Java Servlet](https://www.graphql-java-kickstart.com/servlet/) + [Jetty](https://github.com/eclipse/jetty.project).
+
+Run:
+
+```
+cd octopus/build/install/octopus/
+bin/octopus
+```
+
+Test & benchmark:
+
+```
+curl -v -H "Accept: application/json" -H "Content-Type: application/json" --data @payload-10.graphql.json "http://localhost:17002/graphql"
+wrk -t4 -c400 -d10s -s payload-10.graphql.lua http://localhost:17002/graphql
+wrk -t4 -c400 -d10s -s payload-100.graphql.lua http://localhost:17002/graphql
+```
+
 ## Plankton
 
 gRPC server.
-Build using [gRPC](https://grpc.io/) + [Protocol buffers](https://developers.google.com/protocol-buffers/).
+Built using [gRPC](https://grpc.io/) + [Protocol buffers](https://developers.google.com/protocol-buffers/).
 
 Run:
 

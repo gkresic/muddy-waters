@@ -13,3 +13,5 @@ include 'piranha'
 include 'narwhal'
 
 include 'plankton'
+include 'octopus'
+
