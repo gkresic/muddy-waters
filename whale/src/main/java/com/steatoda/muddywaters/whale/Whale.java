@@ -6,6 +6,7 @@ import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.resource.ResourceFactory;
+import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.eclipse.jetty.xml.XmlConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import com.google.common.eventbus.EventBus;
 
 import java.io.FileNotFoundException;
 import java.net.URL;
+import java.util.concurrent.Executors;
 
 public class Whale {
 
@@ -54,6 +56,9 @@ public class Whale {
 				throw new FileNotFoundException("Jetty root (war) not found on classpath");
 			context.setWar(webAppDir.toURI().toString());
 			context.addEventListener(WhaleInjector.get().getInstance(GuiceResteasyBootstrapServletContextListener.class));
+			// enable virtual threads
+			if (server.getThreadPool() instanceof QueuedThreadPool queuedThreadPool)
+				queuedThreadPool.setVirtualThreadsExecutor(Executors.newVirtualThreadPerTaskExecutor());
 		} catch (Exception e) {
 			throw new RuntimeException("Error configuring Jetty", e);
 		}
