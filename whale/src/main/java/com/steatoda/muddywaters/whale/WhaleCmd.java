@@ -5,31 +5,22 @@ import org.slf4j.LoggerFactory;
 
 public class WhaleCmd {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
 		Log.info("**************************************************");
-		Log.info("Welcome to Whale {}...", WhaleProperties.get().getVersion());
+		Log.info("Welcome to Whale...");
 		Log.info("**************************************************");
 
 		final Whale whale = WhaleInjector.get().getInstance(Whale.class);
 
-		whale.init();
 		whale.start();
 
-		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-			whale.stop();
-			whale.destroy();
-		}));
+		Runtime.getRuntime().addShutdownHook(new Thread(whale::close));
 
-		try {
-			Thread.currentThread().join();
-		} catch (InterruptedException e) {
-			throw new RuntimeException("Main thread interrupted?!", e);
-		}
+		Thread.currentThread().join();
 
 	}
 
-	@SuppressWarnings("unused")
 	private static final Logger Log = LoggerFactory.getLogger(WhaleCmd.class);
 
 }
