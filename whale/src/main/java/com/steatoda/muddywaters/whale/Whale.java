@@ -2,6 +2,7 @@ package com.steatoda.muddywaters.whale;
 
 import com.google.inject.servlet.GuiceFilter;
 import dev.resteasy.guice.GuiceResteasyBootstrapServletContextListener;
+import jakarta.inject.Inject;
 import jakarta.servlet.DispatcherType;
 import org.eclipse.jetty.ee10.servlet.ServletContextHandler;
 import org.eclipse.jetty.server.Server;
@@ -20,21 +21,13 @@ import java.util.concurrent.Executors;
 
 public class Whale {
 
-	public static Whale get() {
-		if (instance == null)
-			instance = new Whale();
-		return instance;
+	@Inject
+	public Whale(EventBus eventBus, GuiceResteasyBootstrapServletContextListener guiceResteasyListener) {
+		this.eventBus = eventBus;
+		this.guiceResteasyListener = guiceResteasyListener;
 	}
 
-	private Whale() {}
-
 	public void	init() {
-        
-		Log.info("**************************************************");
-		Log.info("Welcome to Whale {}...", WhaleProperties.get().getVersion());
-		Log.info("**************************************************");
-
-		eventBus = WhaleInjector.get().getInstance(EventBus.class);
 
 		eventBus.post(new WhalePreInitEvent(this));
 
@@ -48,7 +41,7 @@ public class Whale {
 			// NOTE: register only GuiceFilter here and all the other filters/servlets in com.steatoda.muddywaters.whale.servlet.WhaleServletModule
 			handler.addFilter(GuiceFilter.class, "/*", EnumSet.of(DispatcherType.REQUEST));
 			// have to add ServletContextListener here (instead in WhaleServletModule) because otherwise it won't see our WhaleInjector as parent
-			handler.addEventListener(WhaleInjector.get().getInstance(GuiceResteasyBootstrapServletContextListener.class));
+			handler.addEventListener(guiceResteasyListener);
 			server.setHandler(handler);
 			// enable virtual threads
 			if (server.getThreadPool() instanceof QueuedThreadPool queuedThreadPool)
@@ -118,9 +111,10 @@ public class Whale {
 	}
 
 	private static final Logger Log = LoggerFactory.getLogger(Whale.class);
-	private static Whale instance = null;
 
-	private EventBus eventBus = null;
+	private final EventBus eventBus;
+	private final GuiceResteasyBootstrapServletContextListener guiceResteasyListener;
+
 	private Server server = null;
 	
 }

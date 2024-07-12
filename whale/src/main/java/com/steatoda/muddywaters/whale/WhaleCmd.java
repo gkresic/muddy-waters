@@ -7,7 +7,11 @@ public class WhaleCmd {
 
 	public static void main(String[] args) {
 
-		final Whale whale = Whale.get();
+		Log.info("**************************************************");
+		Log.info("Welcome to Whale {}...", WhaleProperties.get().getVersion());
+		Log.info("**************************************************");
+
+		final Whale whale = WhaleInjector.get().getInstance(Whale.class);
 
 		whale.init();
 		whale.start();

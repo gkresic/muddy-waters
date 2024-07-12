@@ -25,6 +25,7 @@ public class WhaleModule extends AbstractModule {
 	protected void configure() {
 		
 		bind(EventBus.class).to(WhaleEventBus.class).asEagerSingleton();
+		bind(Whale.class).asEagerSingleton();
 
 	}
 
