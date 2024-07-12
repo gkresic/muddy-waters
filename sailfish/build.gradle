@@ -10,12 +10,6 @@ ext {
 	micronautVersion = '3.8.0'
 }
 
-java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
-	}
-}
-
 graalvmNative.toolchainDetection = false
 
 micronaut {
