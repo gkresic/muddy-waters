@@ -20,11 +20,19 @@ public class EatHandler extends Handler.Abstract {
 	@Override
 	public boolean handle(Request request, Response response, Callback callback) throws Exception {
 
-		if (!HttpMethod.POST.is(request.getMethod()))
-			return false;
+		String method = request.getMethod();
+		String path = Request.getPathInContext(request);
 
-		if (!Request.getPathInContext(request).equals("/eat"))
-			return false;
+		if (HttpMethod.POST.is(method) && path.equals("/eat")) {
+			eat(request, response, callback);
+			return true;
+		}
+
+		return false;
+
+	}
+
+	private void eat(Request request, Response response, Callback callback) throws Exception {
 
 		Payload max = new Payload();
 
@@ -45,8 +53,6 @@ public class EatHandler extends Handler.Abstract {
 		response.setStatus(HttpStatus.OK_200);
 		response.getHeaders().put(HttpHeader.CONTENT_TYPE, "application/json");
 		response.write(true, ByteBuffer.wrap(ostream.toByteArray()), callback);
-
-		return true;
 
 	}
 
