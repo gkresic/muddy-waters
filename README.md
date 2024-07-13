@@ -342,8 +342,8 @@ wrk -t4 -c400 -d10s -s payload-100.graphql.lua http://localhost:17002/graphql
 
 ## Marlin
 
-Barebone server implemented just as a Jetty Handler.
-Built using [Jetty](https://github.com/eclipse/jetty.project).
+Barebone server implemented just as a Jetty `Handler`.
+Built using [Jetty](https://github.com/eclipse/jetty.project) + [DSL-JSON](https://github.com/ngs-doo/dsl-json).
 
 Run:
 
