@@ -15,7 +15,16 @@ public class MarlinCmd {
 
 	public static void main(String[] args) throws Exception {
 
-		Log.debug("Marlin starting...");
+		Log.info(
+			"""
+			
+			 __  __            _ _
+			|  \\/  | __ _ _ __| (_)_ __
+			| |\\/| |/ _` | '__| | | '_ \\
+			| |  | | (_| | |  | | | | | |
+			|_|  |_|\\__,_|_|  |_|_|_| |_|
+			"""
+		);
 
         Server server;
 

@@ -7,9 +7,16 @@ public class WhaleCmd {
 
 	public static void main(String[] args) throws Exception {
 
-		Log.info("**************************************************");
-		Log.info("Welcome to Whale...");
-		Log.info("**************************************************");
+		Log.info(
+			"""
+
+			__        ___           _
+			\\ \\      / / |__   __ _| | ___
+			 \\ \\ /\\ / /| '_ \\ / _` | |/ _ \\
+			  \\ V  V / | | | | (_| | |  __/
+			   \\_/\\_/  |_| |_|\\__,_|_|\\___|
+			"""
+		);
 
 		final Whale whale = WhaleInjector.get().getInstance(Whale.class);
 

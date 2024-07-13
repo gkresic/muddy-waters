@@ -17,7 +17,17 @@ public class OctopusCmd {
 
 	public static void main(String[] args) throws Exception {
 
-		Log.debug("Octopus starting...");
+		Log.info(
+			"""
+
+			  ___       _
+			 / _ \\  ___| |_ ___  _ __  _   _ ___
+			| | | |/ __| __/ _ \\| '_ \\| | | / __|
+			| |_| | (__| || (_) | |_) | |_| \\__ \\
+			 \\___/ \\___|\\__\\___/| .__/ \\__,_|___/
+			                    |_|
+			"""
+		);
 
         Server server;
 
