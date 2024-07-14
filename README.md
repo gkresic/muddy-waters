@@ -6,9 +6,9 @@ Minimum requirements: Java 21 on path (or set `JAVA_HOME`)
 
 Build: `./gradlew build`
 
-Test max RSS with: `/usr/bin/time -v <app-binary>`
-
 Test startup time: `date +"%Y-%m-%d %H:%M:%S.%N%:z"; <app-binary>`
+
+Test max RSS: `/usr/bin/time -v <app-binary>`
 
 ## Shark
 
