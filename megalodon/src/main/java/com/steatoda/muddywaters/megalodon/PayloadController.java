@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
 @RestController
 public class PayloadController {
@@ -23,6 +24,11 @@ public class PayloadController {
 
 		return max;
 		
+	}
+
+	@PostMapping("/eat/async")
+	public Mono<Payload> eatAsync(@RequestBody List<Payload> payloads) {
+		return Mono.just(eat(payloads));
 	}
 
 }

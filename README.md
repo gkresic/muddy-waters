@@ -78,6 +78,14 @@ wrk -t4 -c400 -d10s -s payload-10.lua http://localhost:16003/eat
 wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16003/eat
 ```
 
+Test & benchmark (async):
+
+```
+curl -v -H "Accept: application/json" -H "Content-Type: application/json" --data @payload-10.json "http://localhost:16003/eat/async"
+wrk -t4 -c400 -d10s -s payload-10.lua http://localhost:16003/eat/async
+wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16003/eat/async
+```
+
 #### jlink version
 
 Build: `./gradlew :megalodon:runtime`
