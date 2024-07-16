@@ -213,7 +213,7 @@ wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16007/eat
 ## Beluga
 
 Hand-crafted REST server with most of the bells and whistles.
-Built using [Dagger](https://dagger.dev/) + [Javalin](https://sparkjava.com/) + [Jackson](https://github.com/FasterXML/jackson).
+Built using [Dagger](https://dagger.dev/) + [Javalin](https://javalin.io/) + [Jackson](https://github.com/FasterXML/jackson).
 
 Run: `beluga/build/install/beluga/bin/beluga`
 
