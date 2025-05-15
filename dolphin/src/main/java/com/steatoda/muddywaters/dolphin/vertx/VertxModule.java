@@ -6,6 +6,7 @@ import dagger.Provides;
 import dagger.multibindings.IntoMap;
 import dagger.multibindings.StringKey;
 import io.vertx.core.Verticle;
+import io.vertx.core.VerticleBase;
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
 import io.vertx.core.http.HttpServer;
@@ -77,7 +78,7 @@ public interface VertxModule {
 	@Binds
 	@IntoMap
 	@StringKey(RestVerticle.Name)
-	Verticle provideRestVerticle(RestVerticle verticle);
+	VerticleBase provideRestVerticle(RestVerticle verticle);
 
 	Logger Log = LoggerFactory.getLogger(VertxModule.class);
 

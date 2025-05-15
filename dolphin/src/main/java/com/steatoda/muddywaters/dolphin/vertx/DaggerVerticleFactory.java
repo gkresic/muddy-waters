@@ -1,7 +1,8 @@
 package com.steatoda.muddywaters.dolphin.vertx;
 
+import io.vertx.core.Deployable;
 import io.vertx.core.Promise;
-import io.vertx.core.Verticle;
+import io.vertx.core.VerticleBase;
 import io.vertx.core.spi.VerticleFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,14 +22,14 @@ public class DaggerVerticleFactory implements VerticleFactory {
 	}
 
 	@Inject
-	public DaggerVerticleFactory(Map<String, Provider<Verticle>> verticleMap) {
+	public DaggerVerticleFactory(Map<String, Provider<VerticleBase>> verticleMap) {
 		this.verticleMap = verticleMap;
 	}
 
 	@Override
-	public void createVerticle(String verticleName, ClassLoader classLoader, Promise<Callable<Verticle>> promise) {
+	public void createVerticle2(String verticleName, ClassLoader classLoader, Promise<Callable<? extends Deployable>> promise) {
 
-		Provider<Verticle> provider = verticleMap.get(sanitizeVerticleClassName(verticleName));
+		Provider<VerticleBase> provider = verticleMap.get(sanitizeVerticleClassName(verticleName));
 
 		if (provider == null)
 			promise.fail("No provider for verticle '" + verticleName + "'");
@@ -49,6 +50,6 @@ public class DaggerVerticleFactory implements VerticleFactory {
 	@SuppressWarnings("unused")
 	private static final Logger Log = LoggerFactory.getLogger(DaggerVerticleFactory.class);
 
-	private final Map<String, Provider<Verticle>> verticleMap;
+	private final Map<String, Provider<VerticleBase>> verticleMap;
 
 }

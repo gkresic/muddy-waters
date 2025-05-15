@@ -4,8 +4,7 @@ import com.steatoda.muddywaters.dolphin.DolphinDestroyEvent;
 import com.steatoda.muddywaters.dolphin.DolphinPreStartEvent;
 import com.steatoda.muddywaters.dolphin.DolphinPreStopEvent;
 import io.vertx.core.AsyncResult;
-import io.vertx.core.CompositeFuture;
-import io.vertx.core.Promise;
+import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -17,7 +16,6 @@ import javax.inject.Singleton;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -37,12 +35,12 @@ public class VertxService {
 	public void onDolphinPreStart(DolphinPreStartEvent event) {
 
 		try {
-			awaitComplete(CompositeFuture.all(
+			awaitComplete(Future.all(
 				Stream.of(
 					RestVerticle.deploy(vertx)
 				)
 				.peek(future -> future.onSuccess(verticeDeploymentIds::add))
-				.collect(Collectors.toList())
+				.toList()
 			));
 		} catch (Exception e) {
 			throw new RuntimeException("Error deploying vertice(s)", e);
@@ -60,7 +58,7 @@ public class VertxService {
 
 		if (verticlesCount > 0) {
 			try {
-				awaitComplete(CompositeFuture.all(verticeDeploymentIds.stream().map(vertx::undeploy).collect(Collectors.toList())));
+				awaitComplete(Future.all(verticeDeploymentIds.stream().map(vertx::undeploy).toList()));
 				verticeDeploymentIds.clear();
 			} catch (Exception e) {
 				Log.error("Error undeploying vertices", e);
@@ -76,14 +74,7 @@ public class VertxService {
 	public void onDolphinDestroy(DolphinDestroyEvent event) {
 
 		try {
-			Promise<Void> vertxClosePromise = Promise.promise();
-			vertx.close(result -> {
-				if (result.succeeded())
-					vertxClosePromise.complete(result.result());
-				else
-					vertxClosePromise.fail(result.cause());
-			});
-			awaitComplete(vertxClosePromise.future());
+			awaitComplete(vertx.close());
 		} catch (Exception e) {
 			Log.error("Error closing Vert.x", e);
 		}

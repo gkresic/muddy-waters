@@ -5,9 +5,6 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.json.async.NonBlockingJsonParser;
 import com.steatoda.muddywaters.dolphin.DolphinStatus;
 import com.steatoda.muddywaters.dolphin.Payload;
-import io.netty.buffer.ByteBufInputStream;
-import io.netty.buffer.ByteBufOutputStream;
-import io.netty.buffer.Unpooled;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
@@ -15,6 +12,7 @@ import io.vertx.core.buffer.Buffer;
 import io.vertx.core.json.DecodeException;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.jackson.DatabindCodec;
+import io.vertx.core.json.jackson.JacksonCodec;
 import io.vertx.core.parsetools.JsonParser;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
@@ -23,8 +21,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 
 public class DolphinRouter extends RouterImpl {
@@ -72,15 +71,6 @@ public class DolphinRouter extends RouterImpl {
 			.produces("application/json")
 			.handler(BodyHandler.create())
 			.blockingHandler(this::eat3);
-
-		post("/eat9")
-			.consumes("application/json")
-			.produces("application/json")
-			.handler(this::eat9);
-		post("/eat9b")
-			.consumes("application/json")
-			.produces("application/json")
-			.blockingHandler(this::eat9);
 
 		post("/bench1")
 			.consumes("application/json")
@@ -165,7 +155,7 @@ public class DolphinRouter extends RouterImpl {
 
 			Payload max = new Payload();
 
-			Iterator<Payload> iter = DslJsonPayload.iterateOver(Payload.class, new ByteBufInputStream(context.body().buffer().getByteBuf()));
+			Iterator<Payload> iter = DslJsonPayload.iterateOver(Payload.class, new ByteArrayInputStream(context.body().buffer().getBytes()));
 
 			if (iter == null)
 				throw new RuntimeException("Empty input?!");
@@ -178,91 +168,14 @@ public class DolphinRouter extends RouterImpl {
 					max.text = payload.text;
 			}
 
-			ByteBufOutputStream ostream = new ByteBufOutputStream(Unpooled.buffer(300));
+			ByteArrayOutputStream ostream = new ByteArrayOutputStream(300);
 			DslJsonPayload.serialize(max, ostream);
 
-			context.response().end(Buffer.buffer(ostream.buffer()));
+			context.response().end(Buffer.buffer(ostream.toByteArray()));
 
 		} catch (IOException e) {
 			throw new RuntimeException("Unable to read input stream", e);
 		}
-
-	}
-
-	/**
-	 * <p>Stream decode using blocking {@link VertxInputStream} and Jackson.</p>
-	 *
-	 * <p><b>Doesn't work!</b></p>
-	 */
-	private void eat9(RoutingContext context) {
-
-		Log.info("Request received...");
-
-		Log.info("Request ended 1: {}", context.request().isEnded());
-		Log.info("Request ended 1.1: {}", context.request().isEnded());
-
-		//		JsonFactory jsonFactory = new JsonFactory();
-//		//jsonFactory.configure(JsonGenerator.Feature.AUTO_CLOSE_TARGET, false);
-//		jsonFactory.configure(com.fasterxml.jackson.core.JsonParser.Feature.AUTO_CLOSE_SOURCE, false);
-//		ObjectMapper mapper = new ObjectMapper(/*jsonFactory*/)
-//								  .configure(SerializationFeature.WRAP_ROOT_VALUE, false)
-//								  .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-//								  .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-//								  .configure(MapperFeature.USE_WRAPPER_NAME_AS_PROPERTY_NAME, true)
-//								  .disable(MapperFeature.AUTO_DETECT_CREATORS)
-//								  .disable(MapperFeature.AUTO_DETECT_FIELDS)
-//								  .disable(MapperFeature.AUTO_DETECT_GETTERS)
-//								  .disable(MapperFeature.AUTO_DETECT_IS_GETTERS)
-//								  .setSerializationInclusion(JsonInclude.Include.NON_NULL)
-//								  .setDateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ"))
-//			;
-
-//		SimpleModule module = new SimpleModule();
-//			// custom types
-//			module.addSerializer(JsonObject.class, new JsonObjectSerializer());
-//			module.addSerializer(JsonArray.class, new JsonArraySerializer());
-//			// he have 2 extensions: RFC-7493
-//			module.addSerializer(Instant.class, new InstantSerializer());
-//			module.addDeserializer(Instant.class, new InstantDeserializer());
-//			module.addSerializer(byte[].class, new ByteArraySerializer());
-//			module.addDeserializer(byte[].class, new ByteArrayDeserializer());
-//			module.addSerializer(Buffer.class, new BufferSerializer());
-//			module.addDeserializer(Buffer.class, new BufferDeserializer());
-//		mapper.registerModule(module);
-
-		Payload max = new Payload();
-
-		Log.info("Request ended 2: {}", context.request().isEnded());
-
-		try (VertxInputStream istream = new VertxInputStream(context, Long.MAX_VALUE)) {
-
-//			com.fasterxml.jackson.core.JsonParser jsonParser = mapper/*DatabindCodec.mapper()*/.getFactory().createParser(istream);
-//
-//			if (jsonParser.nextToken() != JsonToken.START_ARRAY) {
-//				Log.error("Payload is NOT an array");
-//				throw new RuntimeException("Payload is not an array");
-//			} else {
-//				Log.info("Payload IS an array");
-//			}
-//
-//			while (jsonParser.nextToken() == JsonToken.START_OBJECT) {
-//				Payload payload = mapper/*DatabindCodec.mapper()*/.readValue(jsonParser, Payload.class);
-//				if (max.number == null || max.number < payload.number)
-//					max.number = payload.number;
-//				if (max.text == null || max.text.compareTo(payload.text) < 0)
-//					max.text = payload.text;
-//			}
-
-			String text = new String(istream.readAllBytes(), StandardCharsets.UTF_8);
-			Log.info("Got payload {}", text);
-
-		} catch (IOException e) {
-			throw new RuntimeException("Unable to read input stream", e);
-		}
-
-		Log.info("Sending response {} {}", max.text, max.number);
-
-		context.json(max);
 
 	}
 
@@ -282,7 +195,7 @@ public class DolphinRouter extends RouterImpl {
 
 		long start = System.currentTimeMillis();
 
-		com.fasterxml.jackson.core.JsonParser jsonParser = DatabindCodec.createParser(context.body().buffer());
+		com.fasterxml.jackson.core.JsonParser jsonParser = JacksonCodec.createParser(context.body().buffer());
 
 		Payload[] payloads = DatabindCodec.fromParser(jsonParser, Payload[].class);
 
@@ -315,9 +228,7 @@ public class DolphinRouter extends RouterImpl {
 			// start handler
 			context.request().handler(dataHandler);
 
-			context.request().endHandler(nothing -> {
-				jsonParser.endOfInput();
-			});
+			context.request().endHandler(nothing -> jsonParser.endOfInput());
 
 			Payload[] payloads = DatabindCodec.fromParser(jsonParser, Payload[].class);
 
