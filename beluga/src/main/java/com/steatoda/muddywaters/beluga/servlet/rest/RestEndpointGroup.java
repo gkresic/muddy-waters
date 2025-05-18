@@ -25,17 +25,17 @@ public class RestEndpointGroup implements EndpointGroup {
 	@Override
 	public void addEndpoints() {
 
-		ApiBuilder.post("/eat", this::eat1);
+		ApiBuilder.post("eat", this::eat1);
 
-		ApiBuilder.post("/eat1", this::eat1);
+		ApiBuilder.post("eat1", this::eat1);
 
-		ApiBuilder.post("/eat2", this::eat2);
+		ApiBuilder.post("eat2", this::eat2);
 
-		ApiBuilder.post("/eat3", this::eat3);
+		ApiBuilder.post("eat3", this::eat3);
 
-		ApiBuilder.post("/eatProtobuf", this::eatProtobuf);
+		ApiBuilder.post("eatProtobuf", this::eatProtobuf);
 
-		ApiBuilder.path("/entity", entityEndpointGroup);
+		ApiBuilder.path("entity", entityEndpointGroup);
 
 	}
 

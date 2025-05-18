@@ -14,9 +14,9 @@ public class EntityEndpointGroup implements EndpointGroup {
 	@Override
 	public void addEndpoints() {
 
-		ApiBuilder.get("/foo", this::foo);
+		ApiBuilder.get("foo", this::foo);
 
-		ApiBuilder.get("/bar", this::bar);
+		ApiBuilder.get("bar", this::bar);
 
 	}
 

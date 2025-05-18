@@ -16,11 +16,11 @@ public class RootEndpointGroup implements EndpointGroup {
 	@Override
 	public void addEndpoints() {
 
-		ApiBuilder.get("/bug", this::bug);
+		ApiBuilder.get("bug", this::bug);
 
-		ApiBuilder.get("/hello", this::hello);
+		ApiBuilder.get("hello", this::hello);
 
-		ApiBuilder.path("/rest", restEndpointGroup);
+		ApiBuilder.path("rest", restEndpointGroup);
 
 	}
 
