@@ -3,9 +3,9 @@ package com.steatoda.muddywaters.kaluga.helidon;
 import com.steatoda.muddywaters.kaluga.KalugaPreStartEvent;
 import com.steatoda.muddywaters.kaluga.KalugaPreStopEvent;
 import io.helidon.config.Config;
-import io.helidon.media.common.MediaContext;
-import io.helidon.webserver.Routing;
+import io.helidon.http.media.MediaContext;
 import io.helidon.webserver.WebServer;
+import io.helidon.webserver.http.HttpRouting;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.slf4j.Logger;
@@ -28,7 +28,8 @@ public class HelidonService {
 		EventBus eventBus
 	) {
 
-		webServer = WebServer.builder(Routing.builder().register(rootService))
+		webServer = WebServer.builder()
+			.routing(HttpRouting.builder().register(rootService))
 			.config(config.get("server"))
 			.mediaContext(mediaContext)
 			.build();
@@ -44,9 +45,9 @@ public class HelidonService {
 	@SuppressWarnings("unused")
 	public void onKalugaPreStart(KalugaPreStartEvent event) {
 
-		webServer.start().await();
+		webServer.start();
 
-		Log.info("Javalin started");
+		Log.info("Helidon started");
 
 	}
 
@@ -54,9 +55,9 @@ public class HelidonService {
 	@SuppressWarnings("unused")
 	public void onKalugaPreStop(KalugaPreStopEvent event) {
 
-		webServer.shutdown().await();
+		webServer.stop();
 
-		Log.info("Javalin stopped");
+		Log.info("Helidon stopped");
 
 	}
 

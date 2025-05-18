@@ -2,9 +2,9 @@ apply plugin: 'application'
 
 dependencies {
 
-	implementation 'ch.qos.logback:logback-core:1.4.3'
-	implementation 'ch.qos.logback:logback-classic:1.4.3'
-	implementation 'org.slf4j:slf4j-api:2.0.3'
+	implementation 'ch.qos.logback:logback-core:1.5.18'
+	implementation 'ch.qos.logback:logback-classic:1.5.18'
+	implementation 'org.slf4j:slf4j-api:2.0.17'
 
 	implementation 'org.greenrobot:eventbus-java:3.3.1'
 	annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.3.1'
@@ -12,16 +12,17 @@ dependencies {
 	implementation 'com.google.dagger:dagger:2.44'
 	annotationProcessor 'com.google.dagger:dagger-compiler:2.44'
 
-	implementation 'io.helidon.webserver:helidon-webserver:3.0.2'
-	implementation 'io.helidon.config:helidon-config-yaml:3.0.2'
+	implementation 'io.helidon.common:helidon-common-media-type:4.2.2'
+	implementation 'io.helidon.config:helidon-config-yaml:4.2.2'
+	implementation 'io.helidon.http.media:helidon-http-media-jackson:4.2.2'
+	implementation 'io.helidon.webserver:helidon-webserver:4.2.2'
 
-	implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.4'
-	implementation 'com.fasterxml.jackson.core:jackson-core:2.13.4'
-	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.4'
+	implementation 'com.fasterxml.jackson.core:jackson-annotations:2.19.0'
+	implementation 'com.fasterxml.jackson.core:jackson-core:2.19.0'
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.19.0'
 
-	implementation 'com.dslplatform:dsl-json:1.9.9'
-	implementation 'com.dslplatform:dsl-json-java8:1.9.9'
-	annotationProcessor 'com.dslplatform:dsl-json-java8:1.9.9'
+	implementation 'com.dslplatform:dsl-json:2.0.2'
+	annotationProcessor 'com.dslplatform:dsl-json:2.0.2'
 
 }
 
