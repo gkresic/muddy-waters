@@ -15,15 +15,14 @@ apply plugin: 'application'
 apply plugin: 'com.google.protobuf'
 
 ext {
-	jettyVersion = '11.0.13'
 	protobufVersion = '3.21.12'
 }
 
 dependencies {
 
-	implementation 'ch.qos.logback:logback-core:1.4.5'
-	implementation 'ch.qos.logback:logback-classic:1.4.5'
-	implementation 'org.slf4j:slf4j-api:2.0.6'
+	implementation 'ch.qos.logback:logback-core:1.5.18'
+	implementation 'ch.qos.logback:logback-classic:1.5.18'
+	implementation 'org.slf4j:slf4j-api:2.0.17'
 
 	implementation 'org.greenrobot:eventbus-java:3.3.1'
 	annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.3.1'
@@ -31,24 +30,16 @@ dependencies {
 	implementation 'com.google.dagger:dagger:2.44.2'
 	annotationProcessor 'com.google.dagger:dagger-compiler:2.44.2'
 
-	implementation "org.eclipse.jetty:jetty-server:${jettyVersion}"
-	implementation "org.eclipse.jetty:jetty-xml:${jettyVersion}"
-	implementation "org.eclipse.jetty:jetty-webapp:${jettyVersion}"
+	implementation ('io.javalin:javalin:6.6.0');
 
-	implementation ('io.javalin:javalin:5.3.1') {
-		exclude group: 'org.eclipse.jetty'
-		exclude group: 'org.eclipse.jetty.websocket'
-	}
-
-	implementation 'com.fasterxml.jackson.core:jackson-annotations:2.14.1'
-	implementation 'com.fasterxml.jackson.core:jackson-core:2.14.1'
-	implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.1'
+	implementation 'com.fasterxml.jackson.core:jackson-annotations:2.19.0'
+	implementation 'com.fasterxml.jackson.core:jackson-core:2.19.0'
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.19.0'
 
 	implementation "com.google.protobuf:protobuf-java:${protobufVersion}"
 
-	implementation 'com.dslplatform:dsl-json:1.10.0'
-	implementation 'com.dslplatform:dsl-json-java8:1.10.0'
-	annotationProcessor 'com.dslplatform:dsl-json-java8:1.10.0'
+	implementation 'com.dslplatform:dsl-json:2.0.2'
+	annotationProcessor 'com.dslplatform:dsl-json:2.0.2'
 
 }
 
@@ -90,7 +81,6 @@ application {
 distributions {
 	main {
 		contents {
-			rename('jetty.template.xml', 'jetty.xml')
 			rename('logback.template.xml', 'logback.xml')
 		}
 	}

@@ -5,8 +5,6 @@ import dagger.Module;
 import dagger.Provides;
 import io.javalin.Javalin;
 import io.javalin.json.JavalinJackson;
-import org.eclipse.jetty.servlet.ServletHolder;
-import org.eclipse.jetty.webapp.WebAppContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,18 +15,14 @@ public interface JavalinModule {
 
 	@Provides
 	@Singleton
-	static Javalin provideJavalin(WebAppContext webappContext, RootEndpointGroup rootEndpointGroup, JsonMapper jsonMapper) {
+	static Javalin provideJavalin(RootEndpointGroup rootEndpointGroup, JsonMapper jsonMapper) {
 
-		Javalin javalin = Javalin.createStandalone(config -> {
-			//config.routing.contextPath = "/rest/";	// doesn't make any difference
-			config.jsonMapper(new JavalinJackson(jsonMapper));
+		return Javalin.create(config -> {
+			config.jetty.defaultPort = 16008;
+			config.jetty.defaultHost = "0.0.0.0";
+			config.jsonMapper(new JavalinJackson(jsonMapper, true));
+			config.router.apiBuilder(rootEndpointGroup);
 		});
-
-		webappContext.addServlet(new ServletHolder(javalin.javalinServlet()), "/rest/*");
-
-		javalin.routes(rootEndpointGroup);
-
-		return javalin;
 
 	}
 
