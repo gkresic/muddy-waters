@@ -254,9 +254,9 @@ bin/kaluga
 Test & benchmark:
 
 ```
-curl -v -H "Accept: application/json" -H "Content-Type: application/json" --data @payload-10.json "http://localhost:16009/eat"
-wrk -t4 -c400 -d10s -s payload-10.lua http://localhost:16009/eat
-wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16009/eat
+curl -v -H "Accept: application/json" -H "Content-Type: application/json" --data @payload-10.json "http://localhost:16009/rest/eat"
+wrk -t4 -c400 -d10s -s payload-10.lua http://localhost:16009/rest/eat
+wrk -t4 -c400 -d10s -s payload-100.lua http://localhost:16009/rest/eat
 ```
 
 ## Piranha

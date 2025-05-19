@@ -10,34 +10,23 @@ import io.helidon.webserver.http.ServerResponse;
 
 import javax.inject.Inject;
 
-public class RootService implements HttpService {
+public class RestService implements HttpService {
 
 	@Inject
-	public RootService(RestService restService, JsonMapper jsonMapper) {
-		this.restService = restService;
+	public RestService(JsonMapper jsonMapper) {
 		this.jsonMapper = jsonMapper;
 	}
 
 	@Override
 	public void routing(HttpRules rules) {
 
-		rules.get("bug", this::bug);
+		rules.post("eat", this::eat1);
 
-		rules.get("hello", this::hello);
+		rules.post("eat1", this::eat1);
 
-		rules.register("rest", restService);
+		rules.post("eat2", Handler.create(String.class, this::eat2));
 
-	}
-
-	private void bug(ServerRequest request, ServerResponse response) {
-
-		throw new RuntimeException("Bug!");
-
-	}
-
-	private void hello(ServerRequest request, ServerResponse response) {
-
-		response.send("Yo!");
+		rules.post("eat3", Handler.create(Payload[].class, this::eat3));
 
 	}
 
@@ -103,7 +92,6 @@ public class RootService implements HttpService {
 
 	}
 
-	private final RestService restService;
 	private final JsonMapper jsonMapper;
 
 }
